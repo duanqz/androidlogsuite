@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<process-config xmlns:androidlogsuite="http://schemas.android.com/apk/res/android">
+  
+  <!--androidlogsuite:type="all" means parse all data  -->
+  <parse-config  androidlogsuite:type="all">
+    <parse-rule androidlogsuite:startWith="7,0,h"
+        androidlogsuite:regx="(?:7,0,h,)(-?+\d+)(?:,)(\d+)(?:.+)"
+       androidlogsuite:casesensitive="false" androidlogsuite:groups="1,2"/>
+    <parse-rule androidlogsuite:startWith="9,h,"
+       androidlogsuite:regx="(?:9,h,)(\d+)(?:,)(?:Bl\=)(\d+)(?:\D*.*)"
+       androidlogsuite:casesensitive="false" androidlogsuite:groups="1,2"/>
+
+    <parse-rule androidlogsuite:startWith="7,0,t,m"
+        androidlogsuite:regx="(?:7,0,t,m,)(.+)"
+       androidlogsuite:casesensitive="false" androidlogsuite:groups="1"/>
+   
+   <parse-rule androidlogsuite:startWith="9,0,l,m"
+        androidlogsuite:regx="(?:9,0,l,m,)(.+)"
+       androidlogsuite:casesensitive="false" androidlogsuite:groups="1"/>
+
+     <parse-rule androidlogsuite:regx="(?:7,\\d+,t,apk,)(.+)"
+       androidlogsuite:casesensitive="false" androidlogsuite:groups="1"/>
+    <parse-rule androidlogsuite:regx="(?:9,\\d+,l,apk,)(.+)"
+       androidlogsuite:casesensitive="false" androidlogsuite:groups="1"/>
+
+    <parse-rule androidlogsuite:startWith="7,0,u"
+        androidlogsuite:regx="(?:.+)"
+       androidlogsuite:casesensitive="false" androidlogsuite:groups="0"/>
+    <parse-rule androidlogsuite:startWith="9,0,u"
+        androidlogsuite:regx="(?:.+)"
+       androidlogsuite:casesensitive="false" androidlogsuite:groups="0"/>
+
+
+
+  </parse-config>
+  <plot-config androidlogsuite:name="history">
+        <option>
+            <chart androidlogsuite:type="area" androidlogsuite:renderTo="history" androidlogsuite:zoomType='x'
+             androidlogsuite:animation="false"/>
+            <title androidlogsuite:text="Battery History Information"/>
+            <xAxis>
+                <title androidlogsuite:text="History Time" />
+                <labels androidlogsuite:enabled='false' />
+            </xAxis >
+            <yAxis androidlogsuite:min="0">
+                <title androidlogsuite:text="Battery Level(%)"/>
+            </yAxis>
+            <plotOptions>
+               <area androidlogsuite:allowPointSelect="true"
+                            androidlogsuite:cursor="pointer">
+                <dataLabels androidlogsuite:enabled="false" />
+            </area>
+       </plotOptions>
+        </option>
+
+  </plot-config>
+    <plot-config androidlogsuite:name="datausage">
+    <option>
+        <chart androidlogsuite:type="pie"
+              androidlogsuite:renderTo="datausage" />
+       <title androidlogsuite:text="Data Usage Information"/>
+       <plotOptions>
+           <pie androidlogsuite:allowPointSelect="true"
+                        androidlogsuite:cursor="pointer">
+             <dataLabels androidlogsuite:enabled="true" 
+                androidlogsuite:format="&lt;b&gt;{point.name}&lt;/b&gt;: {point.y:.0f} bytes"/>
+           </pie>
+       </plotOptions>
+        <tooltip androidlogsuite:pointFormat="{series.name}:&lt;b&gt;{point.y:.0f} bytes &lt;/b&gt;" />
+    </option>
+  </plot-config>
+</process-config>

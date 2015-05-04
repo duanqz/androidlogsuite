@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<process-config xmlns:androidlogsuite="http://schemas.android.com/apk/res/android">
+  
+  <!--androidlogsuite:type="all" means parse all data  -->
+  <parse-config  androidlogsuite:type="all" />
+
+  <plot-config androidlogsuite:name="process">
+       <chart androidlogsuite:name="xyline" androidlogsuite:title="Usage By Process" 
+        androidlogsuite:xAxisLabel="Time" androidlogsuite:yAxisLabel="Battery Level(%)">
+       <orientation androidlogsuite:name="vertical" />
+       </chart>
+  </plot-config>
+</process-config>

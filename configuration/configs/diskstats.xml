@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<process-config xmlns:androidlogsuite="http://schemas.android.com/apk/res/android">
+  
+  <!--androidlogsuite:type="all" means parse all data  -->
+  <parse-config  androidlogsuite:type="all" >
+    <!--kk and l use the same format -->
+    <parse-rule androidlogsuite:regx="(\D+)(?:-\D+:\s+)(\d+)(?:K\s/\s)(\d+)(?:K\stotal\s=\s\d+%\s\D+)"
+       androidlogsuite:casesensitive="false" androidlogsuite:groups="1,2,3"/>
+  </parse-config>
+  <!--androidlogsuite:name="diskstats" is important  -->
+  <plot-config androidlogsuite:name="diskstats" >
+   <data-filter>
+       <sort-order androidlogsuite:name="default" />
+   </data-filter>
+   <option>
+       <chart androidlogsuite:type="pie"
+              androidlogsuite:renderTo="diskstats" />
+       <title androidlogsuite:text="Disk Usage Information"/>
+       <plotOptions>
+           <pie androidlogsuite:allowPointSelect="true"
+                        androidlogsuite:cursor="pointer">
+             <dataLabels androidlogsuite:enabled="true" 
+                androidlogsuite:format="&lt;b&gt;{point.name}&lt;/b&gt;: {point.y:0.2f}% "/>
+           </pie>
+       </plotOptions>
+        <tooltip androidlogsuite:pointFormat="{series.name}:&lt;b&gt;{point.y:.2f} %&lt;/b&gt;" />
+   </option>
+  </plot-config>
+</process-config>

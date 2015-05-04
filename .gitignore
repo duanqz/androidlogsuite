@@ -1,0 +1,30 @@
+# Gradle
+.gradle/
+bin/
+
+# Eclipse
+**/nbproject/private/
+*.project
+*.classpath
+*.settings
+*.setting
+
+# IntelliJ
+*.iml
+.idea/*
+/out
+
+# Other files
+*.IAB
+*.IAD
+*.IMB
+*.IMD
+*.PFI
+*.PO
+*.PR
+*.PRI
+*.PS
+*.so
+*.o
+*.WK3
+

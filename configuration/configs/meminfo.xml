@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<process-config xmlns:androidlogsuite="http://schemas.android.com/apk/res/android">
+
+    <!--androidlogsuite:type="all" means parse all data -->
+    <parse-config androidlogsuite:type="all">
+        <parse-rule androidlogsuite:startWith="time"
+            androidlogsuite:regx="(?:time,)(\d+)(?:,)(\d+)"
+            androidlogsuite:casesensitive="false" androidlogsuite:groups="1,2" />
+        <parse-rule androidlogsuite:startWith="proc"
+            androidlogsuite:regx="(?:proc,)(\D+)(?:,)(.+)(?:,)(\d+)(?:,)(\d+)(?:.+)"
+            androidlogsuite:casesensitive="false" androidlogsuite:groups="1,2,3,4" />
+        <parse-rule androidlogsuite:startWith="oom"
+            androidlogsuite:regx="(?:oom,)(\D+)(?:,)(\d+)"
+            androidlogsuite:casesensitive="false" androidlogsuite:groups="1,2" />
+        <parse-rule androidlogsuite:startWith="ram"
+            androidlogsuite:regx="(?:ram,)(\d+)(?:,)(\d+)(?:,)(\d+)"
+            androidlogsuite:casesensitive="false" androidlogsuite:groups="1,2,3" />
+    </parse-config>
+    <plot-config androidlogsuite:name="total">
+        <option>
+            <chart androidlogsuite:type="pie" androidlogsuite:renderTo="total"
+                androidlogsuite:animation="false" />
+            <title androidlogsuite:text="Total Memory Usage Info" />
+            <plotOptions>
+                <pie androidlogsuite:allowPointSelect="true"
+                    androidlogsuite:cursor="pointer">
+                    <dataLabels androidlogsuite:enabled="true"
+                        androidlogsuite:format="&lt;b&gt;{point.name}&lt;/b&gt;: {point.y:.2f}%" />
+                </pie>
+            </plotOptions>
+            <tooltip androidlogsuite:pointFormat="{point.name}:&lt;b&gt;{point.y:.2f}% &lt;/b&gt;" />
+        </option>
+    </plot-config>
+    <plot-config androidlogsuite:name="category">
+        <data-filter androidlogsuite:id="+datafilter-default">
+            <sort-order androidlogsuite:name="default" />
+            <watermark androidlogsuite:name="5" />
+        </data-filter>
+        <option>
+            <chart androidlogsuite:type="bar" androidlogsuite:renderTo="category"
+                androidlogsuite:animation="false" />
+            <title androidlogsuite:text="Total PSS by Category" />
+            <xAxis>
+                <title androidlogsuite:text="Memory Cateogry" />
+            </xAxis>
+            <yAxis androidlogsuite:id="+yaxis-default" androidlogsuite:min="0">
+                <title androidlogsuite:text="Total PSS Values(MB)" />
+            </yAxis>
+            <plotOptions androidlogsuite:id="+plotOptions-default">
+                <bar androidlogsuite:allowPointSelect="true"
+                    androidlogsuite:cursor="pointer">
+                    <dataLabels androidlogsuite:enabled="true"
+                        androidlogsuite:format="&lt;b&gt;{point.name}&lt;/b&gt;: {point.y}MB" />
+                </bar>
+            </plotOptions>
+            <tooltip androidlogsuite:id="+tooltip-default"
+                androidlogsuite:pointFormat="{point.name}:&lt;b&gt;{point.y}MB &lt;/b&gt;" />
+        </option>
+    </plot-config>
+
+    <plot-config androidlogsuite:name="native">
+        <data-filter androidlogsuite:id="@datafilter-default" />
+        <option>
+            <chart androidlogsuite:type="bar" androidlogsuite:renderTo="native"
+                androidlogsuite:animation="false" />
+            <title androidlogsuite:text="Total PSS in Category Native" />
+            <xAxis androidlogsuite:id="+xaxis-default">
+                <title androidlogsuite:text="Process Name" />
+            </xAxis>
+            <yAxis androidlogsuite:id="@yaxis-default" />
+            <plotOptions androidlogsuite:id="@plotOptions-default" />
+            <tooltip androidlogsuite:id="@tooltip-default" />
+        </option>
+
+    </plot-config>
+    <plot-config androidlogsuite:name="pers">
+        <data-filter androidlogsuite:id="@datafilter-default" />
+        <option>
+            <chart androidlogsuite:type="bar" androidlogsuite:renderTo="pers"
+                androidlogsuite:animation="false" />
+            <title androidlogsuite:text="Total PSS in Category Persistent" />
+            <xAxis androidlogsuite:id="@xaxis-default" />
+            <yAxis androidlogsuite:id="@yaxis-default" />
+            <plotOptions androidlogsuite:id="@plotOptions-default" />
+            <tooltip androidlogsuite:id="@tooltip-default" />
+        </option>
+    </plot-config>
+    <plot-config androidlogsuite:name="fore">
+        <data-filter androidlogsuite:id="@datafilter-default" />
+        <option>
+            <chart androidlogsuite:type="bar" androidlogsuite:renderTo="fore"
+                androidlogsuite:animation="false" />
+            <title androidlogsuite:text="Total PSS in Category Forground" />
+            <xAxis androidlogsuite:id="@xaxis-default" />
+            <yAxis androidlogsuite:id="@yaxis-default" />
+            <plotOptions androidlogsuite:id="@plotOptions-default" />
+            <tooltip androidlogsuite:id="@tooltip-default" />
+        </option>
+    </plot-config>
+    <plot-config androidlogsuite:name="percept">
+        <data-filter androidlogsuite:id="@datafilter-default" />
+        <option>
+            <chart androidlogsuite:type="bar" androidlogsuite:renderTo="percept"
+                androidlogsuite:animation="false" />
+            <title androidlogsuite:text="Total PSS in Category Perceptible" />
+            <xAxis androidlogsuite:id="@xaxis-default" />
+            <yAxis androidlogsuite:id="@yaxis-default" />
+            <plotOptions androidlogsuite:id="@plotOptions-default" />
+            <tooltip androidlogsuite:id="@tooltip-default" />
+        </option>
+    </plot-config>
+    <plot-config androidlogsuite:name="servicea">
+        <data-filter androidlogsuite:id="@datafilter-default" />
+        <option>
+            <chart androidlogsuite:type="bar" androidlogsuite:renderTo="servicea"
+                androidlogsuite:animation="false" />
+            <title androidlogsuite:text="Total PSS in Category Serivce A" />
+            <xAxis androidlogsuite:id="@xaxis-default" />
+            <yAxis androidlogsuite:id="@yaxis-default" />
+            <plotOptions androidlogsuite:id="@plotOptions-default" />
+            <tooltip androidlogsuite:id="@tooltip-default" />
+        </option>
+    </plot-config>
+    <plot-config androidlogsuite:name="serviceb">
+        <data-filter androidlogsuite:id="@datafilter-default" />
+        <option>
+            <chart androidlogsuite:type="bar" androidlogsuite:renderTo="serviceb"
+                androidlogsuite:animation="false" />
+            <title androidlogsuite:text="Total PSS in Category Serivce B" />
+            <xAxis androidlogsuite:id="@xaxis-default" />
+            <yAxis androidlogsuite:id="@yaxis-default" />
+            <plotOptions androidlogsuite:id="@plotOptions-default" />
+            <tooltip androidlogsuite:id="@tooltip-default" />
+        </option>
+    </plot-config>
+    <plot-config androidlogsuite:name="cached">
+        <data-filter androidlogsuite:id="@datafilter-default" />
+        <option>
+            <chart androidlogsuite:type="bar" androidlogsuite:renderTo="cached"
+                androidlogsuite:animation="false" />
+            <title androidlogsuite:text="Total PSS in Category Cached" />
+            <xAxis androidlogsuite:id="@xaxis-default" />
+            <yAxis androidlogsuite:id="@yaxis-default" />
+            <plotOptions androidlogsuite:id="@plotOptions-default" />
+            <tooltip androidlogsuite:id="@tooltip-default" />
+        </option>
+    </plot-config>
+</process-config>
