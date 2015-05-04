@@ -1,6 +1,10 @@
 # Gradle
 .gradle/
 bin/
+local.properties
+
+# Build
+**/build/
 
 # Eclipse
 **/nbproject/private/
