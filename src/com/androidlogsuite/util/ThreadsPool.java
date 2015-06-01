@@ -48,6 +48,7 @@ public class ThreadsPool {
     private void shutdownAndAwaitTermination() {
         mExecutorService.shutdown();
         try {
+            Log.d(TAG, "Waiting 60s ...");
             if (!mExecutorService.awaitTermination(60, TimeUnit.SECONDS)) {
                 mExecutorService.shutdownNow();
                 if (!mExecutorService.awaitTermination(60, TimeUnit.SECONDS))

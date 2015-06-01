@@ -7,8 +7,8 @@
  * user guide available at http://gradle.org/docs/2.3/userguide/tutorial_java_projects.html
  */
 
-// Apply the java plugin to add support for Java
-apply plugin: 'java'
+// Details for plugin "https://docs.gradle.org/current/userguide/application_plugin.html"
+apply plugin: 'application'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -16,6 +16,10 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
 }
+
+defaultTasks  'clean', 'installDist'
+
+mainClassName = "com.androidlogsuite.Suite"
 
 sourceSets {
     main {
@@ -38,3 +42,26 @@ dependencies {
     testCompile "junit:junit:4.11"
 }
 
+
+task copyConfiguration {
+    description 'Copies the configuration directory to the target directory.'
+    inputs.dir 'configuration'
+    outputs.dir "$buildDir/dist"
+
+    doLast {
+        copy {
+            from 'configuration'
+            into "$buildDir/dist/configuration"
+        }
+    }
+
+
+}
+
+distributions {
+    main {
+        contents {
+            from copyConfiguration
+        }
+    }
+}
