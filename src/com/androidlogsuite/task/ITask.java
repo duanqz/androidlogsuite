@@ -12,6 +12,8 @@ public interface ITask {
 
     void start(Model model);
 
+    boolean isFinished();
+
     void stop();
 
 }

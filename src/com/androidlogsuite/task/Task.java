@@ -6,6 +6,8 @@ import com.androidlogsuite.util.Log;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 
@@ -34,8 +36,7 @@ public abstract class Task implements ISocketTask {
 
             if (DEBUG) {
                 StringBuilder sb = new StringBuilder();
-                sb.append("connected to target")
-                .append("\nAdd task ").append(this).append(" to TaskCenter");
+                sb.append("Add task ").append(this).append(" to TaskCenter");
                 Log.d(TAG, sb.toString());
             }
 
@@ -106,6 +107,63 @@ public abstract class Task implements ISocketTask {
         }
 
         return true;
+    }
+
+    /**
+     * Write data to socket.
+     * @param outBuffer
+     * @return Whether write completed
+     */
+    protected boolean writeToSocket(ByteBuffer outBuffer) {
+        try {
+            mSocketChannel.write(outBuffer);
+            outBuffer.clear();
+            return true;
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Read data from socket. All the data will be put into the associated model
+     * @return Whether read completed
+     */
+    protected boolean readFromSocket() {
+        if ((mKey.readyOps() & SelectionKey.OP_READ) != 0) {
+            ByteBuffer readBuffer = mAssociatedModel.getCleanBuffer();
+
+            boolean bReadCompleted = false;
+            while (readBuffer.hasRemaining()) {
+                int nread = 0;
+                try {
+                    nread = mSocketChannel.read(readBuffer);
+                    // Log.Debug(TAG, "read from server: " + nread);
+                } catch (ClosedChannelException ioe) {
+                    nread = 0;
+                    bReadCompleted = true;
+                    // Log.Debug(TAG, "read completed:" + ioe.getMessage());
+                } catch (Exception e) {
+                    Log.d(TAG, e.getMessage());
+                }
+
+                if (nread == -1 || nread == 0) {
+                    bReadCompleted = nread == -1 ? true : false;
+                    // Log.Debug(TAG, "read completed? " + bReadCompleted);
+                    break;
+                }
+            }
+
+            // read completed or no buffer
+            if (bReadCompleted || readBuffer.hasRemaining() == false) {
+                mAssociatedModel.putCleanBuffer(readBuffer);
+                Log.d(TAG, "Read " + new String(readBuffer.array(), 0, readBuffer.position()));
+                return bReadCompleted;
+            }
+        }
+
+        return false;
     }
 
     abstract protected String getServerIP();

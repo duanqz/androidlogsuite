@@ -181,6 +181,8 @@ public class BatteryStats extends Model {
 
         private BatteryStats mBatteryStats;
 
+        private boolean bHasValidDataForDrawing;
+
         private static final String LINE_BEGINNWITH_HISTORY_KK = "7,0,h";
         private static final String LINE_BEGINNWITH_HISTORY_L = "9,h";
         private static final String LINE_BEIGGINWITH_MISC_KK = "7,0,t,m";
@@ -220,6 +222,8 @@ public class BatteryStats extends Model {
                     String values[] = apkUsage.split(",");
                     APKUsageItem apkUsageItem = new APKUsageItem(values);
                     mBatteryStats.mApkUsageItems.add(apkUsageItem);
+
+                    bHasValidDataForDrawing = true;
                     return false;
                 }
             }
@@ -229,6 +233,9 @@ public class BatteryStats extends Model {
                 item.mTime = Long.parseLong(parsedResults[0]) / 1000;
                 item.batteryLevel = Integer.parseInt(parsedResults[1]);
                 mBatteryStats.mBatteryHistoryItems.add(item);
+
+                bHasValidDataForDrawing = true;
+
             } else if (startsWithWord.startsWith(LINE_BEIGGINWITH_MISC_KK)
                     || startsWithWord.startsWith(LINE_BEIGGINWITH_MISC_L)) {
                 String misc = parsedResults[0];
@@ -236,6 +243,9 @@ public class BatteryStats extends Model {
                 for (int i = MISC_SCREENON_TIME; i < MISC_COUNT; i++) {
                     mBatteryStats.mMisItem[i] = Long.parseLong(values[i]);
                 }
+
+                bHasValidDataForDrawing = true;
+
             } else if (startsWithWord.startsWith(LINE_WITH_END_KK)
                     || startsWithWord.startsWith(LINE_WITH_END_L)) {
                 return true;
@@ -243,6 +253,10 @@ public class BatteryStats extends Model {
             return false;
         }
 
+        @Override
+        public boolean hasValidDataForDrawing() {
+            return bHasValidDataForDrawing;
+        }
     }
 
 }

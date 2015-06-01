@@ -233,6 +233,7 @@ public class ConfigCenter {
         if (BaseConfiguration
                 .overrideForNewInstance(modelConfiguration, parser)) {
             modelConfiguration = modelConfiguration.Clone();
+            modelConfiguration.mbParsed = true;
         }
         if (modelConfiguration.mbParsed)
             return modelConfiguration;
@@ -270,6 +271,7 @@ public class ConfigCenter {
         if (BaseConfiguration.overrideForNewInstance(fileModelConfiguration,
                 parser)) {
             fileModelConfiguration = (FileModelConfiguration)fileModelConfiguration.Clone();
+            fileModelConfiguration.mbParsed = true;
         }
         if (fileModelConfiguration.mbParsed)
             return fileModelConfiguration;

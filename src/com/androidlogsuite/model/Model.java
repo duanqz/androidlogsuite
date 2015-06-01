@@ -26,9 +26,8 @@ public abstract class Model {
     protected ModelParser mModelParser;
     protected ModelListener mModelListener;
 
-    volatile public boolean mbPrintVerbose = true;
-    public boolean mbParseFinised;
-    public int mBufferSize = 0;
+    volatile public boolean mbPrintVerbose;
+    public int mBufferSize;
 
     abstract public void draw(Output output);
 
@@ -58,14 +57,17 @@ public abstract class Model {
     }
 
     static public interface ModelListener {
-        void parseFinished(Model model);
+        void onModelParsed(Model model);
     }
 
-    public void notifyParseFinished() {
-        mbParseFinised = true;
-        if (mModelListener == null)
-            return;
-        mModelListener.parseFinished(this);
+    public boolean hasOutputData() {
+        return mModelParser.hasValidDataForDrawing();
+    }
+
+    public void notifyModelParsed() {
+        if (mModelListener != null) {
+            mModelListener.onModelParsed(this);
+        }
     }
 
     public ProcessConfiguration getProcessConfiguration() {
@@ -188,6 +190,12 @@ public abstract class Model {
         // return true, means stop parsing
         public abstract boolean addParsedResult(String[] parsedResults);
 
+
+        /**
+         * @return Whether has valid data for drawing.
+         */
+        public abstract boolean hasValidDataForDrawing();
+
         public boolean parse(ByteBuffer parsingBuffer, int offset) {
             try {
                 if (mParseConfiguration == null) {
@@ -207,10 +215,14 @@ public abstract class Model {
 
                 while (mbParsingFinished == false) {
                     String line = lineNumberReader.readLine();
-                    if (line == null)
+                    if (line == null) {
                         break;
-                    if (getModel().mbPrintVerbose)
+                    }
+
+                    if (getModel().mbPrintVerbose) {
                         Log.d(getModelName(), line);
+                    }
+
                     String[] parseResults = mParseConfiguration
                             .getParseResult(line);
 
@@ -218,6 +230,7 @@ public abstract class Model {
                         mbParsingFinished = addParsedResult(parseResults);
                     }
                 }
+
                 lineNumberReader.close();
                 byteArrayInputStream.close();
 
@@ -298,7 +311,11 @@ public abstract class Model {
                     if (buffer == null) {
                         Log.d(getModelName(), " " + getModel()
                                 + " receiving data is finished");
-                        getModel().notifyParseFinished();
+
+                        // We might notify with mbParsingFinished is false
+                        // If all the buffers have no valid data, force it to be true
+                        mbParsingFinished = true;
+                        getModel().notifyModelParsed();
                         break;
                     }
                     // concate leftoverbuffer with new buffer
@@ -314,10 +331,9 @@ public abstract class Model {
                         parse(mLeftOverBuffer, leftoverOffset);
                         mLeftOverBuffer.clear();
                         if (mbParsingFinished) {
-                            //getModel().getTask().stop();
                             Log.d(getModelName(), " " + getModel()
                                     + " notify parse finished in leftover job");
-                            getModel().notifyParseFinished();
+                            getModel().notifyModelParsed();
                             break;// since parse is finished, no need to do left
                                   // works.
                         }
@@ -328,10 +344,9 @@ public abstract class Model {
                         prepareLeftOverBuffer(buffer, offset);
                         parse(buffer, offset);
                         if (mbParsingFinished) {
-                            //getModel().getTask().stop();
                             Log.d(getModelName(), " " + getModel()
                                     + " notify parse finished in new job");
-                            getModel().notifyParseFinished();
+                            getModel().notifyModelParsed();
                             break;
                         }
                     }

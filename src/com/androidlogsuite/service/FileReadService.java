@@ -1,94 +1,181 @@
 package com.androidlogsuite.service;
 
-import com.androidlogsuite.model.prebuild.BatteryStats;
-import com.androidlogsuite.model.prebuild.DiskStats;
-import com.androidlogsuite.model.prebuild.MemInfo;
-import com.androidlogsuite.model.prebuild.UsageStats;
 import com.androidlogsuite.util.Log;
 import com.androidlogsuite.util.ThreadsPool;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
+import java.util.*;
 
 /**
- * Reading blocks from file, of which content is the result of command `adb bugreport` or `adb logcat`.
- * <p>
- * You could retrieve the following information by typing 'adb bugreport' from the console:
- * <li>diskstats, keyword is 'DUMP OF SERVICE diskstats'</li>
- * <li>batterystats, keyword is 'CHECKIN BATTERYSTATS (dumpsys batterystats -c)'</li>
- * <li>netstats, keyword is 'CHECKIN NETSTATS (dumpsys netstats --checkin)'</li>
- * <li>procstats, keyword is 'CHECKIN PROCSTATS (dumpsys procstats -c)'</li>
- * <li>usagestats, keyword is 'CHECKIN USAGESTATS (dumpsys usagestats -c)'</li>
- * <li>meminfo, keyword is 'CHECKIN MEMINFO (dumpsys meminfo --checkin)'</li>
- * </p>
+ * Provide file reading service.
+ * Waiting for clients connecting, launch work thread to interact with clients when connected.
+ * <b>Data format from clients must be <red>"ADBCommand@filename"</red></b>, response FAIL if
+ * illegal format is received.
  *
  * @author duanqizhi
  */
-public class FileReadService implements Runnable {
+public class FileReadService implements Runnable, FileReadWorker.WorkFinishedListener {
 
     private static final String TAG = FileReadService.class.getSimpleName();
 
-    private static Map<String, String> sKeywords = new HashMap<String, String>(4);
-
-    private volatile boolean bServiceStoped;
-
-    private ServerSocket mServerSocket;
+    private static final FileReadService gFileReadService = new FileReadService();
 
     public static final String SERVER_IP = "127.0.0.1";
     public static final int SERVER_PORT  = 9527;
 
-    static {
-        sKeywords.put(DiskStats.ADB_COMMAND, "DUMP OF SERVICE diskstats");
-        sKeywords.put(BatteryStats.ADB_COMMAND, "dumpsys batterystats -c");
-        sKeywords.put(MemInfo.ADB_COMMAND, "dumpsys meminfo -c");
-        sKeywords.put(UsageStats.ADB_COMMAND, "dumpsys usagestats -c");
+    private static Selector mSelector;
+    private static ServerSocketChannel mServerSocketChannel;
+
+    private ByteBuffer mBuffer;     // Buffer for reading data from client
+    private Map<String, FileReadWorker> mFileReadWorkers;   // Each filename has a related FileReadWorker
+
+    private volatile boolean bInService;
+
+    private FileReadService() {
+        mBuffer = ByteBuffer.wrap(new byte[1024]);
+        mFileReadWorkers = new HashMap<String, FileReadWorker>();
     }
 
-    public FileReadService() {
+    public static FileReadService getFileReadService() {
+        return gFileReadService;
+    }
+
+    public void start() {
+        bInService = true;
+
+        createServerSocket();
+
+        ThreadsPool.getThreadsPool().addTask(this);
+    }
+
+    private static void createServerSocket() {
         try {
-            mServerSocket = new ServerSocket(SERVER_PORT);
+            if (mSelector == null || !mSelector.isOpen()) {
+                mSelector = Selector.open();
+            }
+
+            if (mServerSocketChannel == null || !mServerSocketChannel.isOpen()) {
+                mServerSocketChannel = ServerSocketChannel.open();
+                mServerSocketChannel.configureBlocking(false);
+                mServerSocketChannel.socket().bind(new InetSocketAddress(SERVER_IP, SERVER_PORT));
+                mServerSocketChannel.register(mSelector, SelectionKey.OP_ACCEPT);
+            }
 
         } catch (IOException e) {
             Log.d(TAG, "Error when creating server socket. " + e.getMessage());
         }
     }
 
+    public void stop() {
+        bInService = false;
+        mBuffer.clear();
+
+        // Stop all the workers
+        for (FileReadWorker worker : mFileReadWorkers.values()) {
+            worker.stop();
+        }
+
+        mFileReadWorkers.clear();
+
+        try {
+            mServerSocketChannel.close();
+            mSelector.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Log.d(TAG, "Mission done. FileReadService is stopped.");
+    }
+
     @Override
     public void run() {
-        while(!bServiceStoped) {
-            try {
-                Socket socket = mServerSocket.accept();
-                ThreadsPool.getThreadsPool().addTask(new WorkThread(socket));
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            while (bInService) {
+                mSelector.select();
+
+                handleConnection();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            bInService = false;
+        }
+    }
+
+    private void handleConnection() throws IOException {
+        Iterator it = mSelector.selectedKeys().iterator();
+        while (it.hasNext()) {
+            SelectionKey key = (SelectionKey) it.next();
+            it.remove();
+
+            if (key.isAcceptable()) {
+                registerSocketChannel(mServerSocketChannel.accept());
+            } else {
+                dispatchSocketChannel((SocketChannel) key.channel());
             }
         }
     }
 
-    public void stop() {
-        try {
-            bServiceStoped = true;
-            mServerSocket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    /**
+     * Register socket channel to selector.
+     */
+    private void registerSocketChannel(final SocketChannel socketChannel) throws IOException {
+        socketChannel.configureBlocking(false);
+        socketChannel.register(mSelector, SelectionKey.OP_READ);
     }
 
-    class WorkThread implements Runnable {
-
-        Socket mSocket;
-
-        WorkThread(Socket socket) {
-            mSocket = socket;
+    /**
+     * Dispatch socket channel to a FileReadWorker which is related with a filename
+     */
+    private boolean dispatchSocketChannel(final SocketChannel socketChannel) throws IOException {
+        mBuffer.clear();
+        if (socketChannel.read(mBuffer) <= 0) {
+            socketChannel.write(ByteBuffer.wrap("FAIL".getBytes()));
+            return false;
         }
 
-        @Override
-        public void run() {
-            Log.d(TAG, "Client port is " + mSocket.getLocalPort());
+        // The format of data from client is like:
+        // adbCommand@filename
+        String content = new String(mBuffer.array(), 0, mBuffer.position());
+        String[] parts = content.split("@");
+        if (parts == null || parts.length < 2) {
+            Log.d(TAG, "Error, IllegalArgument from client!!!");
+            socketChannel.write(ByteBuffer.wrap("FAIL".getBytes()));
+            return false;
         }
+
+        String cmd = parts[0], filename = parts[1];
+        FileReadWorker worker = getFileReadWork(filename);
+        worker.addConnection(new FileReadWorker.Connection(cmd, socketChannel));
+        Log.d(TAG, "Dispatch socket channel to FileReadWorker : " + worker);
+
+        return true;
+    }
+
+    private FileReadWorker getFileReadWork(String filename) {
+        FileReadWorker worker = mFileReadWorkers.get(filename);
+        if (worker == null) {
+            worker = new FileReadWorker(filename);
+
+            mFileReadWorkers.put(filename, worker);
+            worker.setWorkFinishedListener(this);
+            worker.start();
+
+            Log.d(TAG, "A new FileReadWorker is at your service : " + worker);
+        }
+
+        return worker;
+    }
+
+    @Override
+    public void onReadFinished(FileReadWorker fileReadWorker) {
+        mFileReadWorkers.remove(fileReadWorker.mFileName);
     }
 }
 

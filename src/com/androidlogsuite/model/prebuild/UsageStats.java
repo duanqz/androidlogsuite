@@ -77,6 +77,8 @@ public class UsageStats extends Model {
         static Pattern mProcessPattern = Pattern.compile("(?:P\\:)(.+)",
                 Pattern.CASE_INSENSITIVE);
 
+        boolean bHasValidDataForDrawing;
+
         public UsageStatsParser(Model usageStats) {
             mUsageStats = (UsageStats) usageStats;
         }
@@ -108,6 +110,7 @@ public class UsageStats extends Model {
                             String[] values = value.split(",");
                             ProcessUsageItem item = new ProcessUsageItem(values);
                             mUsageStats.mProcessUsageItems.add(item);
+                            bHasValidDataForDrawing = true;
                         }
                     }
 
@@ -117,6 +120,11 @@ public class UsageStats extends Model {
             } catch (Exception e) {
                 // TODO: handle exception
             }
+            return false;
+        }
+
+        @Override
+        public boolean hasValidDataForDrawing() {
             return false;
         }
 

@@ -65,7 +65,7 @@ public class MemInfo extends Model {
 
     @Override
     public void draw(Output output) {
-        Log.d(TAG, "MemInfo draw");
+        Log.d(TAG, ">>> start drawing MemInfo ...");
         drawTotalInfo(output);
         drawCaterygoryInfo(output);
         for (int i = 0; i < mTotalPssByAdj.length; i++) {
@@ -74,7 +74,7 @@ public class MemInfo extends Model {
                 continue;
             drawCategory(output, memInfos, i);
         }
-
+        Log.d(TAG, "<<< finish drawing MemInfo.");
     }
 
     private void drawTotalInfo(Output output) {
@@ -261,6 +261,8 @@ public class MemInfo extends Model {
     static public class MemInfoParser extends Model.ModelParser {
         private MemInfo mMemInfo;
 
+        private boolean bHasValidDataForDrawing;
+
         private static final String LINE_BEGINWITH_TIME = "time";
         private static final String LINE_BEGINWITH_PROC = "proc";
         private static final String LINE_BEGINWITH_OOM = "oom";
@@ -286,6 +288,9 @@ public class MemInfo extends Model {
             if (startsWithWord.contains(LINE_BEGINWITH_TIME)) {
                 mMemInfo.mUpTime = Integer.parseInt(parsedResults[0]);
                 mMemInfo.mRealTime = Integer.parseInt(parsedResults[1]);
+
+                bHasValidDataForDrawing = true;
+
             } else if (startsWithWord.contains(LINE_BEGINWITH_PROC)) {
                 ProcessMemInfo memInfo = new ProcessMemInfo();
                 memInfo.adjType = parsedResults[0];
@@ -293,10 +298,16 @@ public class MemInfo extends Model {
                 memInfo.totalPSS = Integer.parseInt(parsedResults[3]);
                 LinkedList<ProcessMemInfo> list = mMemInfo.mTotalPssByAdj[getIndexFromCategory(memInfo.adjType)];
                 list.add(memInfo);
+
+                bHasValidDataForDrawing = true;
+
             } else if (startsWithWord.contains(LINE_BEGINWITH_OOM)) {
                 String type = parsedResults[0];
                 long pss = Integer.parseInt(parsedResults[1]);
                 mMemInfo.mPssByCategory[getIndexFromCategory(type)] = pss;
+
+                bHasValidDataForDrawing = true;
+
             } else if (startsWithWord.contains(LINE_BEGINWITH_RAM)) {
                 mMemInfo.mTotalRamInfo.totalRam = Integer
                         .parseInt(parsedResults[0]);
@@ -304,9 +315,16 @@ public class MemInfo extends Model {
                         .parseInt(parsedResults[1]);
                 mMemInfo.mTotalRamInfo.usedRam = Integer
                         .parseInt(parsedResults[2]);
+
+                bHasValidDataForDrawing = true;
                 return true;
             }
             return false;
+        }
+
+        @Override
+        public boolean hasValidDataForDrawing() {
+            return bHasValidDataForDrawing;
         }
     }
 }

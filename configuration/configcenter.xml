@@ -21,14 +21,16 @@ file models:
 each file model contains one file to parse by included model-config
 -->
 <file-model androidlogsuite:id="+filemodel1" androidlogsuite:filename="bugreport">
-<model-config androidlogsuite:id="@dumpsys-diskstats"/> 
-<model-config androidlogsuite:id="@dumpsys-meminfo"/> 
-<model-config androidlogsuite:id="@dumpsys-batterystats"/> 
+<model-config androidlogsuite:id="@dumpsys-diskstats"/>
+<!--<model-config androidlogsuite:id="@dumpsys-meminfo"/>-->
+<model-config androidlogsuite:id="@dumpsys-batterystats"/>
 </file-model>
 
-<file-model androidlogsuite:id="@filemodel1" androidlogsuite:override="true" androidlogsuite:filename="bugreport1">
-<model-config androidlogsuite:id="@dumpsys-diskstats" androidlogsuite:override="true" androidlogsuite:configfile="meminfo.xml"/> 
-</file-model>
+
+<!--<file-model androidlogsuite:id="@filemodel1" androidlogsuite:override="true" androidlogsuite:filename="bugreport1">-->
+<!--<model-config androidlogsuite:id="@dumpsys-diskstats" androidlogsuite:override="true" androidlogsuite:configfile="meminfo.xml"/>-->
+<!--</file-model>-->
+
 </file-models>
 </models>
 

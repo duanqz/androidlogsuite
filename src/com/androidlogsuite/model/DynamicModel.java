@@ -56,6 +56,8 @@ public class DynamicModel extends Model {
 
         private DynamicModel mModel;
 
+        private boolean bHasValidDataForDrawing;
+
         public DynamicModelParser(Model model) {
             mModel = (DynamicModel) model;
         }
@@ -64,6 +66,11 @@ public class DynamicModel extends Model {
         public boolean addParsedResult(String[] parsedResults) {
             Log.d(TAG, parsedResults);
             return false;
+        }
+
+        @Override
+        public boolean hasValidDataForDrawing() {
+            return bHasValidDataForDrawing;
         }
 
         public boolean parseWithoutParseConfiguration(ByteBuffer parsingBuffer,

@@ -9,6 +9,7 @@ import com.androidlogsuite.plotter.Plotter;
 import com.androidlogsuite.task.AdbTask;
 import com.androidlogsuite.task.ITask;
 import com.androidlogsuite.task.Task;
+import com.androidlogsuite.util.Log;
 
 public class DiskStats extends Model {
 
@@ -33,6 +34,7 @@ public class DiskStats extends Model {
     }
 
     public void draw(Output output) {
+        Log.d(TAG, ">>> start drawing DiskStats ...");
         String id = "diskstats";
         PlotConfiguration plotConfiguration = getProcessConfiguration()
                 .getPlotConfiguration(id);
@@ -57,6 +59,7 @@ public class DiskStats extends Model {
         values[0] = new OutputItem(id, plotConfiguration.getTitle(), 300, 300);
         values[1] = sb.toString();
         output.drawObjects(values);
+        Log.d(TAG, "<<< finish drawing DiskStats");
     }
 
     public DiskStats(ModelConfiguration modelConfig) {
@@ -74,6 +77,8 @@ public class DiskStats extends Model {
 
         private DiskStats mDiskStats;
 
+        private boolean bHasValidDataForDrawing;
+
         public DiskStatsParser(DiskStats diskStats) {
             mDiskStats = (DiskStats) diskStats;
             mParseConfiguration = mDiskStats.getProcessConfiguration()
@@ -81,22 +86,35 @@ public class DiskStats extends Model {
 
         }
 
+        @Override
         public Model getModel() {
             return mDiskStats;
         }
 
+        @Override
         public boolean addParsedResult(String[] parsedResults) {
             if (parsedResults[0].contains("Data")) {
                 mDiskStats.mDataFree = Integer.parseInt(parsedResults[2]);
                 mDiskStats.mDataTotal = Integer.parseInt(parsedResults[3]);
+                bHasValidDataForDrawing = true;
+
             } else if (parsedResults[0].contains("Cache")) {
                 mDiskStats.mCacheFree = Integer.parseInt(parsedResults[2]);
                 mDiskStats.mCacheTotal = Integer.parseInt(parsedResults[3]);
+                bHasValidDataForDrawing = true;
+
             } else if (parsedResults[0].contains("System")) {
                 mDiskStats.mSystemFree = Integer.parseInt(parsedResults[2]);
                 mDiskStats.mSystemTotal = Integer.parseInt(parsedResults[3]);
+
+                bHasValidDataForDrawing = true;
             }
             return false;
+        }
+
+        @Override
+        public boolean hasValidDataForDrawing() {
+            return bHasValidDataForDrawing;
         }
     }
 

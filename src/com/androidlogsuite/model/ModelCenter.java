@@ -7,11 +7,13 @@ import com.androidlogsuite.model.prebuild.BatteryStats;
 import com.androidlogsuite.model.prebuild.DiskStats;
 import com.androidlogsuite.model.prebuild.MemInfo;
 import com.androidlogsuite.output.OutputCenter;
+import com.androidlogsuite.service.FileReadService;
 import com.androidlogsuite.task.AdbTask;
 import com.androidlogsuite.task.FileTask;
 import com.androidlogsuite.task.ITask;
 import com.androidlogsuite.task.TaskFactory;
 import com.androidlogsuite.util.Log;
+import com.androidlogsuite.util.ThreadsPool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,6 +48,10 @@ public class ModelCenter implements Model.ModelListener {
         Log.d(TAG, "We have " + mAdbModelConfigurations.size() + " adb models to parse");
         Log.d(TAG, "We have " + mFileModelConfigurations.size() + " file models to parse");
 
+        if (mFileModelConfigurations != null && mFileModelConfigurations.size() > 0) {
+            FileReadService.getFileReadService().start();
+        }
+
     }
 
     public static ModelCenter getModelCenter() {
@@ -72,16 +78,17 @@ public class ModelCenter implements Model.ModelListener {
         }
 
         // Bind file model to task
-//        for (FileModelConfiguration fileModelConfig : mFileModelConfigurations) {
-//            // Start the service to process file
-//            //TODO fileModelConfig.mFileName;
-//            for (ModelConfiguration adbModelConfig : fileModelConfig.getFileModels()) {
-//                model = constructModelFromModelConfig(adbModelConfig);
-//                task = TaskFactory.createTask(FileTask.class);
-//
-//                bindModelToTask(model, task);
-//            }
-//        }
+        for (FileModelConfiguration fileModelConfig : mFileModelConfigurations) {
+            // Start the service to process file
+            for (ModelConfiguration adbModelConfig : fileModelConfig.getFileModels()) {
+                model = constructModelFromModelConfig(adbModelConfig);
+                FileTask fileTask = (FileTask) TaskFactory.createTask(FileTask.class);
+                // Each file task has a related filename
+                fileTask.setFileName(fileModelConfig.mFileName);
+
+                bindModelToTask(model, fileTask);
+            }
+        }
     }
 
     private void bindModelToTask(Model model, ITask task) {
@@ -116,27 +123,23 @@ public class ModelCenter implements Model.ModelListener {
     }
 
     @Override
-    public void parseFinished(Model model) {
+    public void onModelParsed(Model model) {
         synchronized (mParsedModelNum) {
-            if (model.mbParseFinised) {
-                mParsedModelNum += 1;
-            }
+            mParsedModelNum += 1;
         }
 
-        // Stop the task
-        ITask task = mAssociatedTasks.get(model);
-        task.stop();
-
-        if (model.mbParseFinised) {
+        if (model.hasOutputData()) {
             Log.d(TAG, model + " have been parsed, add to OutputCenter");
             OutputCenter.getOutputCenter().addModel(model);
+        } else {
+            Log.d(TAG, model + " have been parsed, but no output data");
         }
 
         if (mParsedModelNum == mAssociatedTasks.size()) {
             Log.d(TAG, "All models have been parsed, quit ModelCenter");
             mAssociatedTasks.clear();
 
-            // Add null object to force OutputCenter quit.
+            // Add null object to tell OutputCenter quit.
             OutputCenter.getOutputCenter().addModel(null);
         }
     }

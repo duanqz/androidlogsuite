@@ -3,6 +3,7 @@ package com.androidlogsuite;
 import com.androidlogsuite.configuration.ConfigCenter;
 import com.androidlogsuite.model.ModelCenter;
 import com.androidlogsuite.output.OutputCenter;
+import com.androidlogsuite.service.FileReadService;
 import com.androidlogsuite.task.TaskCenter;
 import com.androidlogsuite.util.Log;
 import com.androidlogsuite.util.ThreadsPool;
@@ -37,11 +38,13 @@ public class Suite implements OutputCenter.OutputCenterCallback {
 
     @Override
     public void outputCenterQuit() {
+        Log.d(TAG, ">>> OutputCenter is quit, stopping all threads ...");
+        FileReadService.getFileReadService().stop();
         TaskCenter.getTaskCenter().stop();
         OutputCenter.getOutputCenter().stop();
         ThreadsPool.getThreadsPool().stop();
 
-        Log.d(TAG, "Finish output.");
+        Log.d(TAG, "<<< finish stopping all threads.");
     }
 
     public static void main(String[] args) {

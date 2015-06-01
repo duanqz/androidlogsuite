@@ -140,10 +140,10 @@ public class TaskCenter implements Runnable {
                 return;
             }
         }
-        // run task
-        boolean bTaskFinished = task.receive();
 
-        if (bTaskFinished) {
+        // task receive from target
+        task.receive();
+        if (task.isFinished()) {
             task.stop();
         }
     }

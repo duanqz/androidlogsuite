@@ -185,24 +185,14 @@ public class AdbTask extends Task {
     }
 
     private boolean writeCmd(String cmd) {
-        try {
-            String realCmd = prepareForSend(cmd);
-            ByteBuffer outBuffer = ByteBuffer.wrap(realCmd.getBytes());
-            mSocketChannel.write(outBuffer);
-            outBuffer.clear();
-            outBuffer = null;
-            return true;
-        } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
-            e.printStackTrace();
-        }
-        return false;
-
+        String realCmd = prepareForSend(cmd);
+        ByteBuffer outBuffer = ByteBuffer.wrap(realCmd.getBytes());
+        return writeToSocket(outBuffer);
     }
 
-    public void setTaskFinished() {
-        mPhase = PHASE_CMD_FINISHED;
-        return;
+    @Override
+    public boolean isFinished() {
+        return mPhase == PHASE_CMD_FINISHED || mPhase == PHASE_CMD_ERROR;
     }
 
     // return -1, continue to wait
@@ -228,38 +218,7 @@ public class AdbTask extends Task {
     }
 
     private boolean getResult(String cmd) {
-        ByteBuffer readBuffer = mAssociatedModel.getCleanBuffer();
-
-        boolean bReadCompleted = false;
-
-        while (readBuffer.hasRemaining()) {
-            int nread = 0;
-            try {
-                nread = mSocketChannel.read(readBuffer);
-                // Log.Debug(TAG, "read from adbserver: " + nread);
-            } catch (ClosedChannelException ioe) {
-                nread = 0;
-                bReadCompleted = true;
-                // Log.Debug(TAG, "read completed:" + ioe.getMessage());
-            } catch (Exception e) {
-                Log.d(TAG, e.getMessage());
-            }
-
-            if (nread == -1 || nread == 0) {
-                bReadCompleted = nread == -1 ? true : false;
-                // Log.Debug(TAG, "read completed? " + bReadCompleted);
-                break;
-            }
-
-        }
-
-        // read completed or no buffer
-        if (bReadCompleted || readBuffer.hasRemaining() == false) {
-            mAssociatedModel.putCleanBuffer(readBuffer);
-            return bReadCompleted;
-        }
-        // Log.Debug(TAG, "cmd handle status: reponse not finished");
-        return false;
+        return readFromSocket();
     }
 
     private boolean switchTransportTarget() {

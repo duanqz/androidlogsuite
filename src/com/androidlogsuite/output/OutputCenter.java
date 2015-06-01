@@ -96,7 +96,15 @@ public class OutputCenter {
                         mOutput = null;
                         break;
                     }
-                    outputModel.draw(mOutput);
+
+                    try {
+                        outputModel.draw(mOutput);
+                    } catch (Exception e) {
+                        /* We should catch this exception when failed to drawing model.
+                         * otherwise, it will block OutputCenter to quit.
+                         */
+                        e.printStackTrace();
+                    }
 
                     outputModel.destroy();
 
