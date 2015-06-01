@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.androidlogsuite.configuration.ModelConfiguration;
 import com.androidlogsuite.model.Model;
 import com.androidlogsuite.output.Output;
 import com.androidlogsuite.task.AdbTask;
@@ -48,8 +49,8 @@ public class UsageStats extends Model {
 
     ArrayList<ProcessUsageItem> mProcessUsageItems;
 
-    public UsageStats() {
-        super();
+    public UsageStats(ModelConfiguration modelConfig) {
+        super(modelConfig);
         mModelParser = new UsageStatsParser(this);
         mAdbClient = new AdbTask(ADB_COMMAND, this);
 

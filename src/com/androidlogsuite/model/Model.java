@@ -26,11 +26,13 @@ public abstract class Model {
     protected ModelParser mModelParser;
     protected ModelListener mModelListener;
 
-    volatile public boolean mbPrintVerbose = false;
+    volatile public boolean mbPrintVerbose = true;
     public boolean mbParseFinised;
     public int mBufferSize = 0;
 
-    public Model() {
+    public Model(ModelConfiguration modelConfig) {
+        mModelConfig = modelConfig;
+
         mCleanBuffers = new ArrayList<ByteBuffer>();
         mDirtyBuffers = new ArrayList<ByteBuffer>();
 
@@ -299,7 +301,7 @@ public abstract class Model {
                     ByteBuffer buffer = (ByteBuffer) object;
                     if (buffer == null) {
                         Log.d(getModelName(), " " + getModel()
-                                + " receing data is finished");
+                                + " receiving data is finished");
                         getModel().notifyParseFinished();
                         break;
                     }

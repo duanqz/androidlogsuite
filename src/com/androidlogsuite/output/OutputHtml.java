@@ -133,7 +133,7 @@ public class OutputHtml extends Output {
         try {
             StringBuilder sb = new StringBuilder();
             sb.append("<body>\n");
-            sb.append("<div id=\"header\"><H1>Android Log Report</h1><h3>made by Innost</h3><hr/></div>\n");
+            sb.append("<div id=\"header\"><H1>Android Log Report</h1><h3>made by Innost & duanqz</h3><hr/></div>\n");
             sb.append("<div id=\"main\">\n");
             sb.append("<div id=\"sidebar\">\n");
             sb.append("<ul>\n");

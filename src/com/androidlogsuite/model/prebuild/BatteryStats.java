@@ -2,6 +2,7 @@ package com.androidlogsuite.model.prebuild;
 
 import java.util.ArrayList;
 
+import com.androidlogsuite.configuration.ModelConfiguration;
 import com.androidlogsuite.configuration.PlotConfiguration;
 import com.androidlogsuite.configuration.ParseConfiguration.ParseRule;
 import com.androidlogsuite.model.Model;
@@ -19,8 +20,8 @@ public class BatteryStats extends Model {
 
     private AdbTask mAdbClient;
 
-    public BatteryStats() {
-        super();
+    public BatteryStats(ModelConfiguration modelConfig) {
+        super(modelConfig);
         mModelParser = new BatteryStatsParser(this);
         mAdbClient = new AdbTask(ADB_COMMAND, this);
     }

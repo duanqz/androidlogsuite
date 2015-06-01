@@ -189,7 +189,7 @@ public class AdbTask extends Task {
                 int status = getStatus();
                 if (status == -1)
                     break;
-                Log.d(TAG, "adbserver handle " + mCmd + " " + status);
+                Log.d(TAG, "adbserver handle " + mCmd + ", status = " + status);
                 mPhase = status == 1 ? PHASE_GETTING_RESULTS : PHASE_CMD_ERROR;
             }
                 break;

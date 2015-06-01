@@ -117,8 +117,10 @@ public class ProcessConfiguration extends BaseConfiguration {
         if (BaseConfiguration.overrideForNewInstance(dataFilter, parser))
             dataFilter = dataFilter.Clone();
 
-        if (dataFilter.mbParsed)
+        if (dataFilter.mbParsed) {
+            plotConfig.mDataFilter = dataFilter;
             return;
+        }
 
         final int innerDepth = parser.getDepth();
         int type;

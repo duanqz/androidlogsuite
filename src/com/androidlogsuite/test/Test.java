@@ -2,6 +2,7 @@ package com.androidlogsuite.test;
 
 import com.androidlogsuite.configuration.ConfigCenter;
 import com.androidlogsuite.model.ModelCenter;
+import com.androidlogsuite.model.prebuild.DiskStats;
 import com.androidlogsuite.output.OutputCenter;
 import com.androidlogsuite.output.OutputCenter.OutputCenterCallback;
 import com.androidlogsuite.task.TaskCenter;
@@ -15,30 +16,32 @@ public class Test implements OutputCenterCallback {
      */
     public static void main(String[] args) {
 
+        Test test = new Test();
         // testJFreeChart();
-        testAdb();
-        // testpdf();
+        test.testAdb();
+        //testpdf();
         // testXMLParse();
     }
 
-    private static void testAdb() {
+    private void testAdb() {
         // DiskStats.test();
-        //Test test = new Test();
-        //ThreadsPool.getThreadsPool().start();
-        //TaskCenter.getTaskCenter().start();
-        //OutputCenter.getOutputCenter().setOutputCenterCallback(test).start();
+        ThreadsPool.getThreadsPool().start();
+        TaskCenter.getTaskCenter().start();
+
+        OutputCenter.getOutputCenter().setOutputCenterCallback(this).start();
         ConfigCenter.getConfigCenter().setupConfig();
         ModelCenter.getModelCenter().runModels();
-        /*synchronized (test) {
+
+        synchronized (this) {
             try {
-                test.wait();
+                this.wait();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         TaskCenter.getTaskCenter().stop();
         OutputCenter.getOutputCenter().stop();
-        ThreadsPool.getThreadsPool().stop();*/
+        ThreadsPool.getThreadsPool().stop();
 
         Log.d("Test", "finished work, quit test");
     }

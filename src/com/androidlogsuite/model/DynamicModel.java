@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.ByteBuffer;
 
+import com.androidlogsuite.configuration.ModelConfiguration;
 import com.androidlogsuite.output.Output;
 import com.androidlogsuite.task.Task;
 import com.androidlogsuite.util.Log;
@@ -38,24 +39,24 @@ public class DynamicModel extends Model {
         return getModelName();
     }
 
-    public DynamicModel() {
-        super();
+    public DynamicModel(ModelConfiguration modelConfig) {
+        super(modelConfig);
         mModelParser = new DynamicModelParser(this);
         mBufferSize = 1 << 10;
     }
 
-    public DynamicModel(int buffersize) {
-        this();
-        if (buffersize <= 0)
-            buffersize = 1 << 10;
-        mBufferSize = buffersize;
-    }
+//    public DynamicModel(int buffersize) {
+//        this();
+//        if (buffersize <= 0)
+//            buffersize = 1 << 10;
+//        mBufferSize = buffersize;
+//    }
 
-    public DynamicModel(Task task) {
-        this();
-        mTask = task;
-        mTask.setup(this);
-    }
+//    public DynamicModel(ModelConfiguration modelConfig) {
+//        this(modelConfig);
+//        mTask = task;
+//        mTask.setup(this);
+//    }
 
     static private class DynamicModelParser extends Model.ModelParser {
 

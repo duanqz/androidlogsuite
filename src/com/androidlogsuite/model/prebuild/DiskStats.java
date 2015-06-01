@@ -1,5 +1,6 @@
 package com.androidlogsuite.model.prebuild;
 
+import com.androidlogsuite.configuration.ModelConfiguration;
 import com.androidlogsuite.configuration.PlotConfiguration;
 import com.androidlogsuite.model.Model;
 import com.androidlogsuite.output.Output;
@@ -57,8 +58,8 @@ public class DiskStats extends Model {
         output.drawObjects(values);
     }
 
-    public DiskStats() {
-        super();
+    public DiskStats(ModelConfiguration modelConfig) {
+        super(modelConfig);
         mModelParser = new DiskStatsParser(this);
         mAdbClient = new AdbTask(ADB_COMMAND, this);
 

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
+import com.androidlogsuite.configuration.ModelConfiguration;
 import com.androidlogsuite.configuration.PlotConfiguration;
 import com.androidlogsuite.configuration.PlotConfiguration.DataFilter;
 import com.androidlogsuite.model.Model;
@@ -217,8 +218,8 @@ public class MemInfo extends Model {
 
     }
 
-    public MemInfo() {
-        super();
+    public MemInfo(ModelConfiguration modelConfig) {
+        super(modelConfig);
         mAdbClient = new AdbTask(ADB_COMMAND, this);
         mModelParser = new MemInfoParser(this);
 
