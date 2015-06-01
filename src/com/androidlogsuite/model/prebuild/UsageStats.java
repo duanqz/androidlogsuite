@@ -19,11 +19,6 @@ public class UsageStats extends Model {
     public static String ADB_COMMAND = "shell:dumpsys usagestats -c";
     public static String TAG = "UsageStats";
 
-    private AdbTask mAdbClient;
-
-    public Task getTask() {
-        return mAdbClient;
-    }
 
     @Override
     public void draw(Output output) {
@@ -31,8 +26,15 @@ public class UsageStats extends Model {
         // output.drawObject(getProcessUsageChart());
     }
 
+    @Override
     public String getModelName() {
         return TAG;
+    }
+
+
+    @Override
+    public String getAdbCommand() {
+        return ADB_COMMAND;
     }
 
     private static class ProcessUsageItem {
@@ -52,8 +54,6 @@ public class UsageStats extends Model {
     public UsageStats(ModelConfiguration modelConfig) {
         super(modelConfig);
         mModelParser = new UsageStatsParser(this);
-        mAdbClient = new AdbTask(ADB_COMMAND, this);
-
     }
 
     /*

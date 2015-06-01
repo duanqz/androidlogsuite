@@ -9,6 +9,10 @@ import com.androidlogsuite.task.TaskCenter;
 import com.androidlogsuite.util.Log;
 import com.androidlogsuite.util.ThreadsPool;
 
+/**
+ * No use.
+ * @deprecated
+ */
 public class Test implements OutputCenterCallback {
 
     /**
@@ -30,7 +34,7 @@ public class Test implements OutputCenterCallback {
 
         OutputCenter.getOutputCenter().setOutputCenterCallback(this).start();
         ConfigCenter.getConfigCenter().setupConfig();
-        ModelCenter.getModelCenter().runModels();
+        ModelCenter.getModelCenter().bindModelsToTasks();
 
         synchronized (this) {
             try {

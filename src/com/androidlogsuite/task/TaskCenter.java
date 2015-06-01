@@ -14,7 +14,7 @@ public class TaskCenter implements Runnable {
 
     private static String TAG = TaskCenter.class.toString();
     private static Selector mSelector;
-    private HashMap<SelectionKey, Task> mTasks;
+    private HashMap<SelectionKey, ISocketTask> mTasks;
 
     
     private static TaskCenter gTaskCenter = new TaskCenter();
@@ -25,7 +25,7 @@ public class TaskCenter implements Runnable {
     }
 
     private TaskCenter() {
-        mTasks = new HashMap<SelectionKey, Task>();
+        mTasks = new HashMap<SelectionKey, ISocketTask>();
         try {
             mSelector = Selector.open();
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class TaskCenter implements Runnable {
         return mSelector;
     }
 
-    public void addSocketChannel(SelectionKey key, AdbTask client) {
+    public void addSocketChannel(SelectionKey key, ISocketTask client) {
         synchronized (mTasks) {
             mTasks.put(key, client);
             try {
@@ -76,7 +76,7 @@ public class TaskCenter implements Runnable {
     }
 
     public void run() {
-        ArrayList<Task> needCloseTasks = new ArrayList<Task>();
+        ArrayList<ISocketTask> needCloseTasks = new ArrayList<ISocketTask>();
         while (mbCenterStopped == false) {
             try {
                 needCloseTasks.clear();
@@ -91,15 +91,15 @@ public class TaskCenter implements Runnable {
                     }
                     if (mbCenterStopped)
                         break;
-                    Collection<Task> clients = mTasks.values();
-                    for (Task client : clients) {
-                        if (client.prepareToRun() == false) {
+                    Collection<ISocketTask> clients = mTasks.values();
+                    for (ISocketTask client : clients) {
+                        if (client.transmit() == false) {
                             needCloseTasks.add(client);
                         }
                     }
                 }
 
-                for (Task task : needCloseTasks) {
+                for (ISocketTask task : needCloseTasks) {
                     task.close();
                 }
 
@@ -121,17 +121,17 @@ public class TaskCenter implements Runnable {
             }
         }
         Log.d(TAG, "remove unfinished tasks");
-        for (Task task : needCloseTasks) {
-            task.close();
+        for (ISocketTask task : needCloseTasks) {
+            task.stop();
         }
-        Collection<Task> clients = mTasks.values();
-        for (Task client : clients) {
-            client.close();
+        Collection<ISocketTask> clients = mTasks.values();
+        for (ISocketTask client : clients) {
+            client.stop();
         }
     }
 
     private void handleTask(SelectionKey key) {
-        Task task = null;
+        ISocketTask task = null;
         synchronized (mTasks) {
             task = mTasks.get(key);
             if (task == null) {
@@ -141,10 +141,10 @@ public class TaskCenter implements Runnable {
             }
         }
         // run task
-        boolean bTaskFinished = task.run();
+        boolean bTaskFinished = task.receive();
 
         if (bTaskFinished) {
-            task.close();
+            task.stop();
         }
     }
 }

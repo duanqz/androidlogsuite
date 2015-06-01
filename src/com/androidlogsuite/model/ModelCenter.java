@@ -1,11 +1,5 @@
 package com.androidlogsuite.model;
 
-import java.util.ArrayList;
-
-import com.androidlogsuite.output.Output;
-import com.androidlogsuite.task.TaskCenter;
-import org.xmlpull.v1.XmlPullParser;
-
 import com.androidlogsuite.configuration.ConfigCenter;
 import com.androidlogsuite.configuration.ConfigCenter.FileModelConfiguration;
 import com.androidlogsuite.configuration.ModelConfiguration;
@@ -14,7 +8,14 @@ import com.androidlogsuite.model.prebuild.DiskStats;
 import com.androidlogsuite.model.prebuild.MemInfo;
 import com.androidlogsuite.output.OutputCenter;
 import com.androidlogsuite.task.AdbTask;
+import com.androidlogsuite.task.FileTask;
+import com.androidlogsuite.task.ITask;
+import com.androidlogsuite.task.TaskFactory;
 import com.androidlogsuite.util.Log;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModelCenter implements Model.ModelListener {
     private static final String TAG = "ModelCenter";
@@ -25,10 +26,11 @@ public class ModelCenter implements Model.ModelListener {
     ArrayList<FileModelConfiguration> mFileModelConfigurations;
 
 
-    ArrayList<DynamicModel> mDynamicModels = null;
+    ArrayList<DynamicModel> mDynamicModels;
 
 
-    private ArrayList<Model> mAllModels = new ArrayList<Model>();
+    private Map<Model, ITask> mAssociatedTasks;
+
     private Integer mParsedModelNum = 0;
 
 
@@ -36,16 +38,18 @@ public class ModelCenter implements Model.ModelListener {
     private boolean bAllModelsParseFinished = false;
 
     private ModelCenter() {
+        mAssociatedTasks = new HashMap<Model, ITask>();
+
+        ConfigCenter configCenter = ConfigCenter.getConfigCenter();
+        mAdbModelConfigurations = configCenter.getAdbModelConfigs();
+        mFileModelConfigurations = configCenter.getFileModelConfigs();
+        Log.d(TAG, "We have " + mAdbModelConfigurations.size() + " adb models to parse");
+        Log.d(TAG, "We have " + mFileModelConfigurations.size() + " file models to parse");
+
     }
 
     public static ModelCenter getModelCenter() {
         return gModelCenter;
-    }
-
-    public void addModel(Model model) {
-        synchronized (mAllModels) {
-            mAllModels.add(model);
-        }
     }
 
     public void addDynamicModel(DynamicModel model) {
@@ -54,33 +58,45 @@ public class ModelCenter implements Model.ModelListener {
         synchronized (mDynamicModels) {
             mDynamicModels.add(model);
         }
-
     }
 
-    public void runModels() {
-        ConfigCenter configCenter = ConfigCenter.getConfigCenter();
-        mAdbModelConfigurations = configCenter.getAdbModelConfigs();
-        Log.d(TAG, "We have " + mAdbModelConfigurations.size() + " adb models to parse");
-        mFileModelConfigurations = configCenter.getFileModelConfigs();
-        Log.d(TAG, "We have " + mFileModelConfigurations.size() + " file models to parse");
+    public void bindModelsToTasks() {
+        Model model;
+        ITask task;
+        // Bind adb model to task
+        for (ModelConfiguration adbModelConfig : mAdbModelConfigurations) {
+            model = constructModelFromModelConfig(adbModelConfig);
+            task = TaskFactory.createTask(AdbTask.class);
 
-
-        for (ModelConfiguration modelConfig : mAdbModelConfigurations) {
-            Model model = constructModelFromModelConfig(modelConfig);
-            if (model != null) {
-                //model.mbPrintVerbose = true;
-                mAllModels.add(model);
-            }
-//            if (modelConfig.mType.equals("dumpsys") && modelConfig.mCmd.equals("meminfo")) {
-//                Model model = new MemInfo(modelConfig);
-//                model.mbPrintVerbose = true;
-//                mAllModels.add(model);
-//            }
+            bindModelToTask(model, task);
         }
+
+        // Bind file model to task
+//        for (FileModelConfiguration fileModelConfig : mFileModelConfigurations) {
+//            // Start the service to process file
+//            //TODO fileModelConfig.mFileName;
+//            for (ModelConfiguration adbModelConfig : fileModelConfig.getFileModels()) {
+//                model = constructModelFromModelConfig(adbModelConfig);
+//                task = TaskFactory.createTask(FileTask.class);
+//
+//                bindModelToTask(model, task);
+//            }
+//        }
+    }
+
+    private void bindModelToTask(Model model, ITask task) {
+        if (model == null || task == null) {
+            Log.d(TAG, "Fail to bind, model or task is null");
+            return;
+        }
+
+        task.start(model);
+        mAssociatedTasks.put(model, task);
     }
 
     private Model constructModelFromModelConfig(ModelConfiguration modelConfig) {
         Model model = null;
+        ITask task;
 //        if (modelConfig.mType.equals("logcat")) {
 //            //model = new DynamicModel(AdbTask.getLogcatTask(modelConfig.mCmd, modelConfig.mbPrintTime));
 //            model = new DynamicModel(modelConfig);
@@ -96,63 +112,29 @@ public class ModelCenter implements Model.ModelListener {
             }
         }
 
-//        if (modelConfig.mDebug)
-//            model.mbPrintVerbose = true;
-
         return model;
     }
 
+    @Override
     public void parseFinished(Model model) {
-        //boolean bFinished = false;
-        //ArrayList<Model> parseFinishedModels = new ArrayList<Model>();
-//        synchronized (mAllModels) {
-//            for (int i = mParsedModelIndex; i < mModels.size(); i++, mParsedModelIndex++) {
-//                Model existingModel = mModels.get(i);
-//                if (existingModel.mbParseFinised) {
-//                    parseFinishedModels.add(existingModel);
-//                } else
-//                    break;
-//            }
-//
-//            if (mParsedModelIndex == mModels.size()) {
-//                Log.d(TAG, "all static models have been parsed");
-//                bFinished = true;
-//                if (mDynamicModels == null || mDynamicModels.size() == 0) {
-//                    Log.d(TAG, "no dynamic models is running");
-//
-//                } else {
-//                    Log.d(TAG, "dynamic models is running,can not quit model center");
-//                }
-//            }
-//        }
-//
-//
-//
-//        if (parseFinishedModels.size() != 0) {
-//            OutputCenter.getOutputCenter().addModels(parseFinishedModels);
-//            parseFinishedModels.clear();
-//            parseFinishedModels = null;
-//        }
-//        if (bFinished) {
-//            Log.d(TAG, "quit model center");
-//            mModels.clear();
-//            OutputCenter.getOutputCenter().addModel(null);
-//        }
-
         synchronized (mParsedModelNum) {
             if (model.mbParseFinised) {
                 mParsedModelNum += 1;
             }
         }
 
+        // Stop the task
+        ITask task = mAssociatedTasks.get(model);
+        task.stop();
+
         if (model.mbParseFinised) {
             Log.d(TAG, model + " have been parsed, add to OutputCenter");
             OutputCenter.getOutputCenter().addModel(model);
         }
 
-        if (mParsedModelNum == mAllModels.size()) {
+        if (mParsedModelNum == mAssociatedTasks.size()) {
             Log.d(TAG, "All models have been parsed, quit ModelCenter");
-            mAllModels.clear();
+            mAssociatedTasks.clear();
 
             // Add null object to force OutputCenter quit.
             OutputCenter.getOutputCenter().addModel(null);

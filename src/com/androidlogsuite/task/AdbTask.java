@@ -20,10 +20,6 @@ public class AdbTask extends Task {
     private static String SERVER_IP = "127.0.0.1";
     private static AdbCommandParser mServerResponseParser;
 
-    private SocketChannel mSocketChannel = null;
-
-    private String mCmd = null;
-
     private static final int PHASE_INITIAL = -1;
     private static final int PHASE_CONNECTED = 0;
     private static final int PHASE_TRANSPORT_SWITCHED = 1;
@@ -33,8 +29,8 @@ public class AdbTask extends Task {
     private static final int PHASE_CMD_ERROR = 5;
     private volatile int mPhase = PHASE_INITIAL;
 
-    private SelectionKey mKey = null;
-    private ByteBuffer mpStatusBuffer = null;
+    private ByteBuffer mpStatusBuffer;
+
     static {
         mServerResponseParser = new AdbCommandParser();
     }
@@ -53,57 +49,19 @@ public class AdbTask extends Task {
 
     }
 
-    private Model mAssociatedModel = null;
-
-    public AdbTask(String command, Model model) {
-        mCmd = command;
+    public AdbTask() {
         mpStatusBuffer = ByteBuffer
                 .wrap(new byte[AdbCommand.ADB_COMMAND_RESPONSE_OK.length()]);
-        setup(model);
-
     }
 
     public AdbTask(String cmd) {
+        this();
         mCmd = cmd;
-        mpStatusBuffer = ByteBuffer
-                .wrap(new byte[AdbCommand.ADB_COMMAND_RESPONSE_OK.length()]);
     }
 
-    public SelectionKey getSelectionKey() {
-        return mKey;
-    }
 
-    public boolean setup(Model model) {
-        if (mAssociatedModel == null) {
-            mAssociatedModel = model;
-        }
-        try {
-            if (mSocketChannel == null) {
-                mSocketChannel = SocketChannel.open();
-                mSocketChannel.socket().bind(
-                        new InetSocketAddress(SERVER_IP, 0));
-            }
-            SocketAddress serverAddress = new InetSocketAddress(SERVER_IP,
-                    SERVER_PORT);
-            mSocketChannel.configureBlocking(false);
-            mKey = mSocketChannel.register(TaskCenter.getTaskCenter()
-                    .getSelector(), SelectionKey.OP_READ);
-            Log.d(TAG, "call connect in setup");
-            mSocketChannel.connect(serverAddress);
-            TaskCenter.getTaskCenter().addSocketChannel(mKey, this);
-        } catch (Exception e) {
-            /*
-             * 1 if server not started, we need to launch it 2 2 if version is
-             * not right, what to do?
-             */
-            e.printStackTrace();
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean prepareToRun() {
+    @Override
+    public boolean transmit() {
         switch (mPhase) {
         case PHASE_CMD_ERROR: {
             Log.d(TAG, "Task is in error status");
@@ -160,7 +118,8 @@ public class AdbTask extends Task {
         return true;
     }
 
-    public boolean run() {
+    @Override
+    public boolean receive() {
         if ((mKey.readyOps() & SelectionKey.OP_READ) != 0) {
             switch (mPhase) {
             case PHASE_CMD_ERROR: {
@@ -207,20 +166,14 @@ public class AdbTask extends Task {
         return false;
     }
 
-    public void close() {
-        try {
-            Log.d(TAG, "close task which cmd is " + mCmd);
-            mAssociatedModel.putCleanBuffer(null);
-            if (mSocketChannel != null) {
-                mSocketChannel.close();
-                mSocketChannel = null;
-            }
-            mCmd = null;
-            TaskCenter.getTaskCenter().removeSocketChannel(mKey);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String getServerIP() {
+        return SERVER_IP;
+    }
 
+    @Override
+    protected int getServerPort() {
+        return SERVER_PORT;
     }
 
     private String prepareForSend(String cmd) {
@@ -247,6 +200,11 @@ public class AdbTask extends Task {
 
     }
 
+    public void setTaskFinished() {
+        mPhase = PHASE_CMD_FINISHED;
+        return;
+    }
+
     // return -1, continue to wait
     // 0:error
     // 1: success
@@ -267,11 +225,6 @@ public class AdbTask extends Task {
             e.printStackTrace();
             return 0;
         }
-    }
-
-    public void setTaskFinished() {
-        mPhase = PHASE_CMD_FINISHED;
-        return;
     }
 
     private boolean getResult(String cmd) {
@@ -313,8 +266,4 @@ public class AdbTask extends Task {
         return writeCmd(AdbCommand.ADB_COMMAND_TRANSPORT_ANY);
     }
 
-    @Override
-    public String getCmd() {
-        return mCmd;
-    }
 }

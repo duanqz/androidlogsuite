@@ -10,6 +10,7 @@ import com.androidlogsuite.output.Output;
 import com.androidlogsuite.output.Output.OutputItem;
 import com.androidlogsuite.plotter.Plotter;
 import com.androidlogsuite.task.AdbTask;
+import com.androidlogsuite.task.ITask;
 import com.androidlogsuite.task.Task;
 import com.androidlogsuite.util.Log;
 
@@ -18,12 +19,9 @@ public class BatteryStats extends Model {
     private static final String TAG = "BatteryStats";
     public static String ADB_COMMAND = "shell:dumpsys batterystats -c";
 
-    private AdbTask mAdbClient;
-
     public BatteryStats(ModelConfiguration modelConfig) {
         super(modelConfig);
         mModelParser = new BatteryStatsParser(this);
-        mAdbClient = new AdbTask(ADB_COMMAND, this);
     }
 
 //    public BatteryStats(String plotConfig, int buffersize) {
@@ -75,12 +73,13 @@ public class BatteryStats extends Model {
     private ArrayList<APKUsageItem> mApkUsageItems;
 
     @Override
-    public Task getTask() {
-        return mAdbClient;
-    }
-
     public String getModelName() {
         return TAG;
+    }
+
+    @Override
+    public String getAdbCommand() {
+        return ADB_COMMAND;
     }
 
     @Override

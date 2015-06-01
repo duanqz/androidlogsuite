@@ -29,8 +29,9 @@ public class Suite implements OutputCenter.OutputCenterCallback {
         // Setup task thread waiting for parsing task
         TaskCenter.getTaskCenter().start();
 
-        // Setup model thread to run tasks associated with models
-        ModelCenter.getModelCenter().runModels();
+        // Setup model center to bind models to tasks
+        // This will trigger the whole process
+        ModelCenter.getModelCenter().bindModelsToTasks();
 
     }
 

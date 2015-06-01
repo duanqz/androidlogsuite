@@ -17,7 +17,7 @@ public class ConfigCenter {
 
     public static class FileModelConfiguration extends BaseConfiguration {
         public String mFileName;
-        private ArrayList<ModelConfiguration> mFileModels = null;
+        private ArrayList<ModelConfiguration> mFileModels;
 
         public FileModelConfiguration() {
             mFileModels = new ArrayList<ModelConfiguration>();
@@ -29,6 +29,10 @@ public class ConfigCenter {
            fileModelConfiguration.mFileName = mFileName;
            fileModelConfiguration.mFileModels = new ArrayList<ModelConfiguration>(mFileModels);
            return fileModelConfiguration;
+        }
+
+        public ArrayList<ModelConfiguration> getFileModels() {
+            return mFileModels;
         }
     }
 

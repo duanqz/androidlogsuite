@@ -14,6 +14,7 @@ adb models: including independently models which run adb cmd to get their info
 <model-config androidlogsuite:id="+dumpsys-meminfo" androidlogsuite:type="dumpsys" androidlogsuite:cmd="meminfo"  androidlogsuite:configfile="meminfo.xml" />
 <model-config androidlogsuite:id="+dumpsys-batterystats" androidlogsuite:type="dumpsys" androidlogsuite:cmd="batterystats" androidlogsuite:configfile="batterystats.xml"/>
 </adb-models>
+
 <file-models>
 <!--
 file models:
@@ -30,5 +31,6 @@ each file model contains one file to parse by included model-config
 </file-model>
 </file-models>
 </models>
+
 <output-config androidlogsuite:type="html" />
 </configuration>

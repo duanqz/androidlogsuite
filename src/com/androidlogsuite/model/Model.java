@@ -1,20 +1,20 @@
 package com.androidlogsuite.model;
 
+import com.androidlogsuite.configuration.ConfigCenter;
+import com.androidlogsuite.configuration.ModelConfiguration;
+import com.androidlogsuite.configuration.ParseConfiguration;
+import com.androidlogsuite.configuration.ProcessConfiguration;
+import com.androidlogsuite.output.Output;
+import com.androidlogsuite.task.ITask;
+import com.androidlogsuite.util.BufferPool;
+import com.androidlogsuite.util.Log;
+import com.androidlogsuite.util.ThreadsPool;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-
-import com.androidlogsuite.configuration.ConfigCenter;
-import com.androidlogsuite.configuration.ModelConfiguration;
-import com.androidlogsuite.configuration.ProcessConfiguration;
-import com.androidlogsuite.configuration.ParseConfiguration;
-import com.androidlogsuite.output.Output;
-import com.androidlogsuite.task.Task;
-import com.androidlogsuite.util.BufferPool;
-import com.androidlogsuite.util.Log;
-import com.androidlogsuite.util.ThreadsPool;
 
 public abstract class Model {
 
@@ -29,6 +29,12 @@ public abstract class Model {
     volatile public boolean mbPrintVerbose = true;
     public boolean mbParseFinised;
     public int mBufferSize = 0;
+
+    abstract public void draw(Output output);
+
+    abstract public String getModelName();
+
+    abstract public String getAdbCommand();
 
     public Model(ModelConfiguration modelConfig) {
         mModelConfig = modelConfig;
@@ -62,19 +68,9 @@ public abstract class Model {
         mModelListener.parseFinished(this);
     }
 
-    abstract public Task getTask();
-
-    public void setTask(Task task) {
-        return;
-    }
-
-    abstract public void draw(Output output);
-
     public ProcessConfiguration getProcessConfiguration() {
         return mModelConfig.mProcessConfiguration;
     }
-
-    abstract public String getModelName();
 
     public ByteBuffer getCleanBuffer() {
         synchronized (mCleanBuffers) {
@@ -318,7 +314,7 @@ public abstract class Model {
                         parse(mLeftOverBuffer, leftoverOffset);
                         mLeftOverBuffer.clear();
                         if (mbParsingFinished) {
-                            getModel().getTask().setTaskFinished();
+                            //getModel().getTask().stop();
                             Log.d(getModelName(), " " + getModel()
                                     + " notify parse finished in leftover job");
                             getModel().notifyParseFinished();
@@ -332,7 +328,7 @@ public abstract class Model {
                         prepareLeftOverBuffer(buffer, offset);
                         parse(buffer, offset);
                         if (mbParsingFinished) {
-                            getModel().getTask().setTaskFinished();
+                            //getModel().getTask().stop();
                             Log.d(getModelName(), " " + getModel()
                                     + " notify parse finished in new job");
                             getModel().notifyParseFinished();

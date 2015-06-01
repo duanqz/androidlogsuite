@@ -13,16 +13,10 @@ import com.androidlogsuite.util.Log;
 public class DynamicModel extends Model {
 
     private static final String TAG = "DynamicModel";
-    private Task mTask;
 
     @Override
-    public Task getTask() {
-        return mTask;
-    }
-
-    public void setTask(Task task) {
-        mTask = task;
-        mTask.setup(this);
+    public String getAdbCommand() {
+        return null;
     }
 
     @Override

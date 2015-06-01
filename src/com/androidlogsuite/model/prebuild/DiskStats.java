@@ -7,6 +7,7 @@ import com.androidlogsuite.output.Output;
 import com.androidlogsuite.output.Output.OutputItem;
 import com.androidlogsuite.plotter.Plotter;
 import com.androidlogsuite.task.AdbTask;
+import com.androidlogsuite.task.ITask;
 import com.androidlogsuite.task.Task;
 
 public class DiskStats extends Model {
@@ -21,14 +22,14 @@ public class DiskStats extends Model {
     public long mSystemTotal;
     public long mSystemFree;
 
-    private AdbTask mAdbClient;
-
-    public Task getTask() {
-        return mAdbClient;
-    }
-
+    @Override
     public String getModelName() {
         return TAG;
+    }
+
+    @Override
+    public String getAdbCommand() {
+        return ADB_COMMAND;
     }
 
     public void draw(Output output) {
@@ -61,8 +62,6 @@ public class DiskStats extends Model {
     public DiskStats(ModelConfiguration modelConfig) {
         super(modelConfig);
         mModelParser = new DiskStatsParser(this);
-        mAdbClient = new AdbTask(ADB_COMMAND, this);
-
     }
 
 //    public DiskStats(String plotConfigName, int buffersize) {

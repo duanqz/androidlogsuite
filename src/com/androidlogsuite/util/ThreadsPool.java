@@ -36,6 +36,7 @@ public class ThreadsPool {
     }
 
     public synchronized void stop() {
+        Log.d(TAG, "Stop ThreadsPool ...");
         gThreadStopped = true;
         shutdownAndAwaitTermination();
         mExecutorService = null;

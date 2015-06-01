@@ -53,15 +53,14 @@ public class MemInfo extends Model {
 
     private TotalRamInfo mTotalRamInfo;
 
-    private Task mAdbClient;
-
     @Override
-    public Task getTask() {
-        return mAdbClient;
-    }
-
     public String getModelName() {
         return TAG;
+    }
+
+    @Override
+    public String getAdbCommand() {
+        return ADB_COMMAND;
     }
 
     @Override
@@ -220,7 +219,6 @@ public class MemInfo extends Model {
 
     public MemInfo(ModelConfiguration modelConfig) {
         super(modelConfig);
-        mAdbClient = new AdbTask(ADB_COMMAND, this);
         mModelParser = new MemInfoParser(this);
 
     }
