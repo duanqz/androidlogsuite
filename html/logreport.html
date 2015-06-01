@@ -4,574 +4,1534 @@
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <script>$(document).ready(function() {
 {
-var object_25 = new Object();
-var object_26 = new Object();
-object_26.renderTo='total';
-object_26.type='pie';
-object_26.plotBorderWidth=1;
-object_26.plotShadow=false;
-object_26.animation=false;
-object_25.chart=object_26;
-var object_27 = new Object();
-object_27.text='Total Memory Usage Info';
-object_25.title=object_27;
+var object_7 = new Object();
+var object_8 = new Object();
+object_8.renderTo='diskstats';
+object_8.type='pie';
+object_8.plotBorderWidth=1;
+object_8.plotShadow=false;
+object_8.animation=false;
+object_7.chart=object_8;
+var object_9 = new Object();
+object_9.text='Disk Usage Information';
+object_7.title=object_9;
+var object_13 = new Object();
+object_13.pointFormat='{series.name}:<b>{point.y:.2f} %</b>';
+object_7.tooltip=object_13;
+var object_10 = new Object();
+var object_11 = new Object();
+object_11.allowPointSelect=true;
+object_11.cursor='pointer';
+var object_12 = new Object();
+object_12.enabled=true;
+object_12.format='<b>{point.name}</b>: {point.y:0.2f}% ';
+object_11.dataLabels=object_12;
+object_10.pie=object_11;
+object_7.plotOptions=object_10;
+var objectList_0 = new Array();
+var object_73 = new Object();
+object_73.name = 'Disk Usage';
+var objectList_1 = new Array({name:'Data-Free',y:32.362827},
+{name:'Data-Used',y:67.637173},
+{name:'Cache-Free',y:97.873346},
+{name:'Cache-Used',y:2.126654},
+{name:'System-Free',y:40.627527},
+{name:'System-Used',y:59.372473}
+);
+object_73.data=objectList_1;
+objectList_0[0]=object_73;
+object_7.series=objectList_0;
+var diskstats = new Highcharts.Chart(object_7);
+};
+{
+var object_55 = new Object();
+var object_56 = new Object();
+object_56.renderTo='history';
+object_56.type='area';
+object_56.zoomType='x';
+object_56.plotBorderWidth=1;
+object_56.plotShadow=false;
+object_56.animation=false;
+object_55.chart=object_56;
+var object_57 = new Object();
+object_57.text='Battery History Information';
+object_55.title=object_57;
+var object_63 = new Object();
+var object_64 = new Object();
+object_64.allowPointSelect=true;
+object_64.cursor='pointer';
+var object_65 = new Object();
+object_65.enabled=false;
+object_64.dataLabels=object_65;
+object_63.area=object_64;
+object_55.plotOptions=object_63;
+var objectList_2 = new Array();
+var object_80 = new Object();
+object_80.name = 'Battery History Info';
+var objectList_3 = new Array({y:100.000000},
+{y:100.000000},
+{y:100.000000},
+{y:99.000000},
+{y:98.000000},
+{y:97.000000},
+{y:96.000000},
+{y:95.000000},
+{y:93.000000},
+{y:93.000000},
+{y:93.000000},
+{y:92.000000},
+{y:92.000000},
+{y:92.000000},
+{y:92.000000},
+{y:91.000000},
+{y:90.000000},
+{y:89.000000},
+{y:89.000000},
+{y:89.000000},
+{y:88.000000},
+{y:88.000000},
+{y:87.000000},
+{y:87.000000},
+{y:86.000000},
+{y:86.000000},
+{y:86.000000},
+{y:85.000000},
+{y:85.000000},
+{y:84.000000},
+{y:83.000000},
+{y:81.000000},
+{y:81.000000},
+{y:79.000000},
+{y:78.000000},
+{y:78.000000},
+{y:78.000000},
+{y:78.000000},
+{y:77.000000},
+{y:77.000000},
+{y:77.000000},
+{y:76.000000},
+{y:76.000000},
+{y:76.000000},
+{y:76.000000},
+{y:75.000000},
+{y:70.000000},
+{y:69.000000},
+{y:65.000000},
+{y:63.000000},
+{y:62.000000},
+{y:60.000000},
+{y:58.000000},
+{y:57.000000},
+{y:57.000000},
+{y:56.000000},
+{y:56.000000},
+{y:56.000000},
+{y:55.000000},
+{y:55.000000},
+{y:54.000000},
+{y:54.000000},
+{y:53.000000},
+{y:52.000000},
+{y:51.000000},
+{y:50.000000},
+{y:49.000000},
+{y:49.000000},
+{y:46.000000},
+{y:46.000000},
+{y:46.000000},
+{y:45.000000},
+{y:45.000000},
+{y:44.000000},
+{y:44.000000},
+{y:44.000000},
+{y:44.000000},
+{y:43.000000},
+{y:43.000000},
+{y:42.000000},
+{y:41.000000},
+{y:41.000000},
+{y:39.000000},
+{y:37.000000},
+{y:34.000000},
+{y:32.000000},
+{y:30.000000},
+{y:30.000000},
+{y:30.000000},
+{y:31.000000},
+{y:32.000000},
+{y:32.000000},
+{y:34.000000},
+{y:38.000000},
+{y:39.000000},
+{y:40.000000},
+{y:41.000000},
+{y:41.000000},
+{y:41.000000},
+{y:43.000000},
+{y:44.000000},
+{y:46.000000},
+{y:48.000000},
+{y:51.000000},
+{y:52.000000},
+{y:52.000000},
+{y:54.000000},
+{y:57.000000},
+{y:61.000000},
+{y:61.000000},
+{y:63.000000},
+{y:65.000000},
+{y:66.000000},
+{y:68.000000},
+{y:68.000000},
+{y:68.000000},
+{y:71.000000},
+{y:72.000000},
+{y:75.000000},
+{y:77.000000},
+{y:77.000000},
+{y:77.000000},
+{y:78.000000},
+{y:79.000000},
+{y:80.000000},
+{y:80.000000},
+{y:79.000000},
+{y:79.000000},
+{y:79.000000},
+{y:78.000000},
+{y:77.000000},
+{y:74.000000},
+{y:73.000000},
+{y:73.000000},
+{y:73.000000},
+{y:73.000000},
+{y:72.000000},
+{y:72.000000},
+{y:72.000000},
+{y:71.000000},
+{y:71.000000},
+{y:71.000000},
+{y:70.000000},
+{y:70.000000},
+{y:70.000000},
+{y:70.000000},
+{y:69.000000},
+{y:69.000000},
+{y:69.000000},
+{y:67.000000},
+{y:67.000000},
+{y:66.000000},
+{y:65.000000},
+{y:64.000000},
+{y:64.000000},
+{y:64.000000},
+{y:64.000000},
+{y:63.000000},
+{y:62.000000},
+{y:61.000000},
+{y:60.000000},
+{y:60.000000},
+{y:59.000000},
+{y:58.000000},
+{y:58.000000},
+{y:58.000000},
+{y:57.000000},
+{y:56.000000},
+{y:54.000000},
+{y:52.000000},
+{y:51.000000},
+{y:51.000000},
+{y:50.000000},
+{y:49.000000},
+{y:49.000000},
+{y:48.000000},
+{y:48.000000},
+{y:47.000000},
+{y:47.000000},
+{y:46.000000},
+{y:46.000000},
+{y:45.000000},
+{y:44.000000},
+{y:44.000000},
+{y:44.000000},
+{y:43.000000},
+{y:43.000000},
+{y:42.000000},
+{y:42.000000},
+{y:41.000000},
+{y:41.000000},
+{y:40.000000},
+{y:40.000000},
+{y:40.000000},
+{y:39.000000},
+{y:38.000000},
+{y:37.000000},
+{y:36.000000},
+{y:36.000000},
+{y:37.000000},
+{y:37.000000},
+{y:39.000000},
+{y:41.000000},
+{y:43.000000},
+{y:45.000000},
+{y:47.000000},
+{y:51.000000},
+{y:53.000000},
+{y:53.000000},
+{y:53.000000},
+{y:53.000000},
+{y:53.000000},
+{y:52.000000},
+{y:52.000000},
+{y:52.000000},
+{y:52.000000},
+{y:52.000000},
+{y:51.000000},
+{y:51.000000},
+{y:49.000000},
+{y:49.000000},
+{y:47.000000},
+{y:44.000000},
+{y:43.000000},
+{y:43.000000},
+{y:42.000000},
+{y:42.000000},
+{y:42.000000},
+{y:42.000000},
+{y:41.000000},
+{y:41.000000},
+{y:41.000000},
+{y:40.000000},
+{y:40.000000},
+{y:39.000000},
+{y:39.000000},
+{y:40.000000},
+{y:41.000000},
+{y:41.000000},
+{y:42.000000},
+{y:42.000000},
+{y:42.000000},
+{y:42.000000},
+{y:42.000000},
+{y:37.000000},
+{y:35.000000},
+{y:36.000000},
+{y:38.000000},
+{y:41.000000},
+{y:43.000000},
+{y:45.000000},
+{y:48.000000},
+{y:49.000000},
+{y:51.000000},
+{y:52.000000},
+{y:52.000000},
+{y:52.000000},
+{y:51.000000},
+{y:50.000000},
+{y:50.000000},
+{y:50.000000},
+{y:49.000000},
+{y:49.000000},
+{y:49.000000},
+{y:50.000000},
+{y:52.000000},
+{y:53.000000},
+{y:55.000000},
+{y:54.000000},
+{y:53.000000},
+{y:52.000000},
+{y:52.000000},
+{y:52.000000},
+{y:52.000000},
+{y:52.000000},
+{y:51.000000},
+{y:46.000000},
+{y:41.000000},
+{y:36.000000},
+{y:36.000000},
+{y:32.000000},
+{y:32.000000},
+{y:31.000000},
+{y:31.000000},
+{y:31.000000},
+{y:31.000000},
+{y:31.000000},
+{y:34.000000},
+{y:38.000000},
+{y:41.000000},
+{y:44.000000},
+{y:46.000000},
+{y:49.000000},
+{y:52.000000},
+{y:55.000000},
+{y:56.000000},
+{y:59.000000},
+{y:59.000000},
+{y:58.000000},
+{y:55.000000},
+{y:53.000000},
+{y:52.000000},
+{y:49.000000},
+{y:48.000000},
+{y:46.000000},
+{y:46.000000},
+{y:44.000000},
+{y:44.000000},
+{y:43.000000},
+{y:43.000000},
+{y:43.000000},
+{y:42.000000},
+{y:42.000000},
+{y:41.000000},
+{y:39.000000},
+{y:37.000000},
+{y:38.000000},
+{y:37.000000},
+{y:37.000000},
+{y:37.000000},
+{y:38.000000},
+{y:38.000000},
+{y:39.000000},
+{y:39.000000},
+{y:40.000000},
+{y:41.000000},
+{y:43.000000},
+{y:44.000000},
+{y:45.000000},
+{y:46.000000},
+{y:47.000000},
+{y:48.000000},
+{y:49.000000},
+{y:49.000000},
+{y:50.000000},
+{y:51.000000},
+{y:51.000000},
+{y:50.000000},
+{y:50.000000},
+{y:50.000000},
+{y:50.000000},
+{y:50.000000},
+{y:50.000000},
+{y:50.000000},
+{y:48.000000},
+{y:48.000000},
+{y:48.000000},
+{y:47.000000},
+{y:47.000000},
+{y:47.000000},
+{y:47.000000},
+{y:49.000000},
+{y:50.000000},
+{y:53.000000},
+{y:55.000000},
+{y:56.000000},
+{y:58.000000},
+{y:59.000000},
+{y:62.000000},
+{y:64.000000},
+{y:65.000000},
+{y:67.000000},
+{y:69.000000},
+{y:70.000000},
+{y:69.000000},
+{y:68.000000},
+{y:68.000000},
+{y:68.000000},
+{y:68.000000},
+{y:67.000000},
+{y:67.000000},
+{y:67.000000},
+{y:66.000000},
+{y:66.000000},
+{y:66.000000},
+{y:66.000000},
+{y:66.000000},
+{y:65.000000},
+{y:65.000000},
+{y:65.000000},
+{y:65.000000},
+{y:64.000000},
+{y:64.000000},
+{y:64.000000},
+{y:64.000000},
+{y:63.000000},
+{y:63.000000},
+{y:63.000000},
+{y:62.000000},
+{y:62.000000},
+{y:62.000000},
+{y:61.000000},
+{y:61.000000},
+{y:61.000000},
+{y:60.000000},
+{y:60.000000},
+{y:60.000000},
+{y:60.000000},
+{y:59.000000},
+{y:59.000000},
+{y:59.000000},
+{y:58.000000},
+{y:60.000000},
+{y:60.000000},
+{y:60.000000},
+{y:60.000000},
+{y:60.000000},
+{y:60.000000},
+{y:60.000000},
+{y:60.000000},
+{y:60.000000},
+{y:59.000000},
+{y:59.000000},
+{y:58.000000},
+{y:57.000000},
+{y:56.000000},
+{y:56.000000},
+{y:55.000000},
+{y:55.000000},
+{y:54.000000},
+{y:53.000000},
+{y:53.000000},
+{y:52.000000},
+{y:52.000000},
+{y:51.000000},
+{y:48.000000},
+{y:48.000000},
+{y:46.000000},
+{y:45.000000},
+{y:45.000000},
+{y:45.000000},
+{y:44.000000},
+{y:44.000000},
+{y:43.000000},
+{y:43.000000},
+{y:43.000000},
+{y:42.000000},
+{y:44.000000},
+{y:44.000000},
+{y:45.000000},
+{y:47.000000},
+{y:43.000000},
+{y:42.000000},
+{y:42.000000},
+{y:42.000000},
+{y:41.000000},
+{y:41.000000},
+{y:42.000000},
+{y:43.000000},
+{y:45.000000},
+{y:47.000000},
+{y:49.000000},
+{y:51.000000},
+{y:51.000000},
+{y:50.000000},
+{y:50.000000},
+{y:49.000000},
+{y:49.000000},
+{y:48.000000},
+{y:48.000000},
+{y:45.000000},
+{y:44.000000},
+{y:45.000000},
+{y:48.000000},
+{y:50.000000},
+{y:50.000000},
+{y:47.000000},
+{y:47.000000},
+{y:49.000000},
+{y:51.000000},
+{y:53.000000},
+{y:55.000000},
+{y:56.000000},
+{y:57.000000},
+{y:59.000000},
+{y:60.000000},
+{y:63.000000},
+{y:66.000000},
+{y:68.000000},
+{y:69.000000},
+{y:70.000000},
+{y:72.000000},
+{y:71.000000},
+{y:71.000000},
+{y:71.000000},
+{y:71.000000},
+{y:71.000000},
+{y:69.000000},
+{y:69.000000},
+{y:69.000000},
+{y:69.000000},
+{y:69.000000},
+{y:68.000000},
+{y:68.000000},
+{y:68.000000},
+{y:67.000000},
+{y:66.000000},
+{y:66.000000},
+{y:65.000000},
+{y:65.000000},
+{y:65.000000},
+{y:64.000000},
+{y:64.000000},
+{y:63.000000},
+{y:63.000000},
+{y:62.000000},
+{y:62.000000},
+{y:62.000000},
+{y:61.000000},
+{y:59.000000},
+{y:58.000000},
+{y:57.000000},
+{y:56.000000},
+{y:55.000000},
+{y:53.000000},
+{y:52.000000},
+{y:52.000000},
+{y:51.000000},
+{y:50.000000},
+{y:49.000000},
+{y:48.000000},
+{y:48.000000},
+{y:48.000000},
+{y:47.000000},
+{y:47.000000},
+{y:46.000000},
+{y:46.000000},
+{y:46.000000},
+{y:46.000000},
+{y:45.000000},
+{y:45.000000},
+{y:44.000000},
+{y:43.000000},
+{y:43.000000},
+{y:43.000000},
+{y:43.000000},
+{y:44.000000},
+{y:44.000000},
+{y:45.000000},
+{y:47.000000},
+{y:48.000000},
+{y:51.000000},
+{y:52.000000},
+{y:53.000000},
+{y:53.000000},
+{y:55.000000},
+{y:56.000000},
+{y:58.000000},
+{y:58.000000},
+{y:58.000000},
+{y:58.000000},
+{y:58.000000},
+{y:58.000000},
+{y:57.000000},
+{y:57.000000},
+{y:57.000000},
+{y:57.000000},
+{y:56.000000},
+{y:55.000000},
+{y:54.000000},
+{y:54.000000},
+{y:54.000000},
+{y:54.000000},
+{y:53.000000},
+{y:53.000000},
+{y:52.000000},
+{y:52.000000},
+{y:52.000000},
+{y:51.000000},
+{y:51.000000},
+{y:51.000000},
+{y:48.000000},
+{y:46.000000},
+{y:43.000000},
+{y:41.000000},
+{y:39.000000},
+{y:38.000000},
+{y:36.000000},
+{y:36.000000},
+{y:35.000000},
+{y:34.000000},
+{y:34.000000},
+{y:34.000000},
+{y:34.000000},
+{y:35.000000},
+{y:36.000000},
+{y:37.000000},
+{y:37.000000},
+{y:38.000000},
+{y:39.000000},
+{y:40.000000},
+{y:41.000000},
+{y:43.000000},
+{y:46.000000},
+{y:48.000000},
+{y:50.000000},
+{y:53.000000},
+{y:56.000000},
+{y:55.000000},
+{y:55.000000},
+{y:57.000000},
+{y:59.000000},
+{y:61.000000},
+{y:62.000000},
+{y:64.000000},
+{y:65.000000},
+{y:66.000000},
+{y:67.000000},
+{y:69.000000},
+{y:71.000000},
+{y:73.000000},
+{y:74.000000},
+{y:74.000000},
+{y:72.000000},
+{y:72.000000},
+{y:72.000000},
+{y:71.000000},
+{y:71.000000},
+{y:70.000000},
+{y:69.000000},
+{y:69.000000},
+{y:67.000000},
+{y:66.000000},
+{y:66.000000},
+{y:66.000000},
+{y:65.000000},
+{y:65.000000},
+{y:65.000000},
+{y:63.000000},
+{y:62.000000},
+{y:61.000000},
+{y:59.000000},
+{y:58.000000},
+{y:58.000000},
+{y:58.000000},
+{y:58.000000},
+{y:57.000000},
+{y:56.000000},
+{y:56.000000},
+{y:55.000000},
+{y:54.000000},
+{y:54.000000},
+{y:53.000000},
+{y:52.000000},
+{y:52.000000},
+{y:51.000000},
+{y:49.000000},
+{y:49.000000},
+{y:48.000000},
+{y:48.000000},
+{y:47.000000},
+{y:47.000000},
+{y:47.000000},
+{y:46.000000},
+{y:48.000000},
+{y:48.000000},
+{y:49.000000},
+{y:47.000000},
+{y:51.000000},
+{y:51.000000},
+{y:49.000000},
+{y:47.000000},
+{y:46.000000},
+{y:46.000000},
+{y:46.000000},
+{y:46.000000},
+{y:45.000000},
+{y:45.000000},
+{y:45.000000},
+{y:45.000000},
+{y:45.000000},
+{y:45.000000},
+{y:44.000000},
+{y:44.000000},
+{y:43.000000},
+{y:42.000000},
+{y:39.000000},
+{y:36.000000},
+{y:38.000000},
+{y:41.000000},
+{y:43.000000},
+{y:45.000000},
+{y:48.000000},
+{y:49.000000},
+{y:50.000000},
+{y:51.000000},
+{y:54.000000},
+{y:56.000000},
+{y:58.000000},
+{y:57.000000},
+{y:56.000000},
+{y:56.000000},
+{y:56.000000},
+{y:56.000000},
+{y:56.000000},
+{y:56.000000},
+{y:55.000000},
+{y:55.000000},
+{y:54.000000},
+{y:54.000000},
+{y:53.000000},
+{y:52.000000},
+{y:52.000000},
+{y:51.000000},
+{y:51.000000},
+{y:50.000000},
+{y:49.000000},
+{y:49.000000},
+{y:48.000000},
+{y:47.000000},
+{y:47.000000},
+{y:47.000000},
+{y:47.000000},
+{y:46.000000},
+{y:45.000000},
+{y:44.000000},
+{y:44.000000},
+{y:43.000000},
+{y:43.000000},
+{y:42.000000},
+{y:41.000000},
+{y:41.000000},
+{y:41.000000},
+{y:40.000000},
+{y:40.000000},
+{y:38.000000},
+{y:37.000000},
+{y:34.000000},
+{y:34.000000},
+{y:34.000000},
+{y:35.000000},
+{y:35.000000},
+{y:36.000000},
+{y:36.000000},
+{y:37.000000},
+{y:38.000000},
+{y:38.000000},
+{y:39.000000},
+{y:39.000000},
+{y:40.000000},
+{y:40.000000},
+{y:41.000000},
+{y:42.000000},
+{y:42.000000},
+{y:43.000000},
+{y:43.000000},
+{y:44.000000},
+{y:45.000000},
+{y:45.000000},
+{y:46.000000},
+{y:46.000000},
+{y:47.000000},
+{y:47.000000},
+{y:48.000000},
+{y:48.000000},
+{y:48.000000},
+{y:48.000000},
+{y:48.000000},
+{y:47.000000},
+{y:47.000000},
+{y:47.000000},
+{y:46.000000},
+{y:45.000000},
+{y:45.000000},
+{y:45.000000},
+{y:44.000000},
+{y:44.000000},
+{y:44.000000},
+{y:43.000000},
+{y:43.000000},
+{y:42.000000},
+{y:41.000000},
+{y:41.000000},
+{y:41.000000},
+{y:40.000000},
+{y:40.000000},
+{y:40.000000},
+{y:39.000000},
+{y:39.000000},
+{y:38.000000},
+{y:37.000000},
+{y:37.000000},
+{y:36.000000},
+{y:36.000000},
+{y:35.000000},
+{y:35.000000},
+{y:35.000000},
+{y:34.000000},
+{y:34.000000},
+{y:34.000000},
+{y:33.000000},
+{y:32.000000},
+{y:30.000000},
+{y:29.000000},
+{y:31.000000},
+{y:33.000000},
+{y:33.000000},
+{y:32.000000},
+{y:31.000000},
+{y:31.000000},
+{y:30.000000},
+{y:29.000000},
+{y:28.000000},
+{y:28.000000},
+{y:29.000000},
+{y:28.000000},
+{y:28.000000},
+{y:27.000000},
+{y:26.000000},
+{y:25.000000},
+{y:25.000000},
+{y:24.000000},
+{y:23.000000},
+{y:23.000000},
+{y:22.000000},
+{y:20.000000},
+{y:17.000000},
+{y:13.000000},
+{y:12.000000},
+{y:11.000000},
+{y:7.000000},
+{y:6.000000},
+{y:7.000000},
+{y:8.000000},
+{y:9.000000},
+{y:12.000000},
+{y:14.000000},
+{y:16.000000},
+{y:18.000000},
+{y:19.000000},
+{y:21.000000},
+{y:22.000000},
+{y:25.000000},
+{y:28.000000},
+{y:30.000000},
+{y:34.000000},
+{y:37.000000},
+{y:39.000000},
+{y:41.000000},
+{y:40.000000},
+{y:40.000000},
+{y:39.000000},
+{y:38.000000},
+{y:40.000000},
+{y:42.000000},
+{y:45.000000},
+{y:48.000000},
+{y:49.000000},
+{y:52.000000},
+{y:55.000000},
+{y:58.000000},
+{y:61.000000},
+{y:64.000000},
+{y:65.000000},
+{y:63.000000},
+{y:59.000000},
+{y:59.000000},
+{y:60.000000},
+{y:62.000000},
+{y:65.000000},
+{y:67.000000},
+{y:68.000000},
+{y:70.000000},
+{y:70.000000},
+{y:69.000000},
+{y:69.000000},
+{y:67.000000},
+{y:67.000000},
+{y:66.000000},
+{y:66.000000},
+{y:65.000000},
+{y:64.000000},
+{y:64.000000},
+{y:64.000000},
+{y:64.000000},
+{y:64.000000},
+{y:63.000000},
+{y:63.000000},
+{y:63.000000},
+{y:63.000000},
+{y:63.000000},
+{y:62.000000},
+{y:62.000000},
+{y:62.000000},
+{y:61.000000},
+{y:61.000000},
+{y:60.000000},
+{y:60.000000},
+{y:60.000000},
+{y:59.000000},
+{y:59.000000},
+{y:59.000000},
+{y:58.000000},
+{y:58.000000},
+{y:58.000000},
+{y:58.000000}
+);
+object_80.data=objectList_3;
+objectList_2[0]=object_80;
+object_55.series=objectList_2;
+var object_58 = new Object();
+object_58.allowDecimals = false;
+var object_59 = new Object();
+object_59.text='History Time';
+object_58.title=object_59;
+var object_60 = new Object();
+object_60.enabled=false;
+object_58.labels=object_60;
+object_55.xAxis=object_58;
+var object_61 = new Object();
+object_61.allowDecimals = false;
+var object_62 = new Object();
+object_62.text='Battery Level(%)';
+object_61.title=object_62;
+object_55.yAxis=object_61;
+var history = new Highcharts.Chart(object_55);
+};
+{
+var object_66 = new Object();
+var object_67 = new Object();
+object_67.renderTo='datausage';
+object_67.type='pie';
+object_67.plotBorderWidth=1;
+object_67.plotShadow=false;
+object_67.animation=false;
+object_66.chart=object_67;
+var object_68 = new Object();
+object_68.text='Data Usage Information';
+object_66.title=object_68;
+var object_72 = new Object();
+object_72.pointFormat='{series.name}:<b>{point.y:.0f} bytes </b>';
+object_66.tooltip=object_72;
+var object_69 = new Object();
+var object_70 = new Object();
+object_70.allowPointSelect=true;
+object_70.cursor='pointer';
+var object_71 = new Object();
+object_71.enabled=true;
+object_71.format='<b>{point.name}</b>: {point.y:.0f} bytes';
+object_70.dataLabels=object_71;
+object_69.pie=object_70;
+object_66.plotOptions=object_69;
+var objectList_4 = new Array();
+var object_977 = new Object();
+object_977.name = 'Data Usage Info';
+var objectList_5 = new Array({name:'Mobile RX',y:109922.000000},
+{name:'Mobile TX',y:10968.000000},
+{name:'Wi-Fi RX',y:615491.000000},
+{name:'Wi-Fi TX',y:52345.000000}
+);
+object_977.data=objectList_5;
+objectList_4[0]=object_977;
+object_66.series=objectList_4;
+var datausage = new Highcharts.Chart(object_66);
+};
+{
+var object_14 = new Object();
+var object_15 = new Object();
+object_15.renderTo='total';
+object_15.type='pie';
+object_15.plotBorderWidth=1;
+object_15.plotShadow=false;
+object_15.animation=false;
+object_14.chart=object_15;
+var object_16 = new Object();
+object_16.text='Total Memory Usage Info';
+object_14.title=object_16;
+var object_20 = new Object();
+object_20.pointFormat='{point.name}:<b>{point.y:.2f}% </b>';
+object_14.tooltip=object_20;
+var object_17 = new Object();
+var object_18 = new Object();
+object_18.allowPointSelect=true;
+object_18.cursor='pointer';
+var object_19 = new Object();
+object_19.enabled=true;
+object_19.format='<b>{point.name}</b>: {point.y:.2f}%';
+object_18.dataLabels=object_19;
+object_17.pie=object_18;
+object_14.plotOptions=object_17;
+var objectList_6 = new Array();
+var object_982 = new Object();
+object_982.name = 'Total Memory Info';
+var objectList_7 = new Array({name:'Used-Ram',y:39.950131},
+{name:'Free-Ram',y:24.295427}
+);
+object_982.data=objectList_7;
+objectList_6[0]=object_982;
+object_14.series=objectList_6;
+var total = new Highcharts.Chart(object_14);
+};
+{
+var object_21 = new Object();
+var object_22 = new Object();
+object_22.renderTo='category';
+object_22.type='bar';
+object_22.plotBorderWidth=1;
+object_22.plotShadow=false;
+object_22.animation=false;
+object_21.chart=object_22;
+var object_23 = new Object();
+object_23.text='Total PSS by Category';
+object_21.title=object_23;
 var object_31 = new Object();
-object_31.pointFormat='{point.name}:<b>{point.y:.2f}% </b>';
-object_25.tooltip=object_31;
+object_31.pointFormat='{point.name}:<b>{point.y}MB </b>';
+object_21.tooltip=object_31;
 var object_28 = new Object();
 var object_29 = new Object();
 object_29.allowPointSelect=true;
 object_29.cursor='pointer';
 var object_30 = new Object();
 object_30.enabled=true;
-object_30.format='<b>{point.name}</b>: {point.y:.2f}%';
+object_30.format='<b>{point.name}</b>: {point.y}MB';
 object_29.dataLabels=object_30;
-object_28.pie=object_29;
-object_25.plotOptions=object_28;
-var objectList_0 = new Array();
-var object_127 = new Object();
-object_127.name = 'Total Memory Info';
-var objectList_1 = new Array({name:'Used-Ram',y:53.586523},
-{name:'Free-Ram',y:31.011785}
+object_28.bar=object_29;
+object_21.plotOptions=object_28;
+var objectList_8 = new Array();
+var object_985 = new Object();
+object_985.name = 'Memory By Category';
+var objectList_9 = new Array({name:'Services B',y:416.000000},
+{name:'Cached',y:373.000000},
+{name:'Persistent',y:210.000000},
+{name:'Visible',y:118.000000},
+{name:'Services A',y:106.000000},
+{name:'Previous',y:70.000000},
+{name:'Foreground',y:70.000000},
+{name:'Perceptible',y:41.000000},
+{name:'Native',y:40.000000},
+{name:'System',y:35.000000}
 );
-object_127.data=objectList_1;
-objectList_0[0]=object_127;
-object_25.series=objectList_0;
-var total = new Highcharts.Chart(object_25);
+object_985.data=objectList_9;
+objectList_8[0]=object_985;
+object_21.series=objectList_8;
+var object_24 = new Object();
+object_24.allowDecimals = false;
+var objectList_10 = new Array();
+objectList_10[0]='Services B';
+objectList_10[1]='Cached';
+objectList_10[2]='Persistent';
+objectList_10[3]='Visible';
+objectList_10[4]='Services A';
+objectList_10[5]='Previous';
+objectList_10[6]='Foreground';
+objectList_10[7]='Perceptible';
+objectList_10[8]='Native';
+objectList_10[9]='System';
+object_24.categories=objectList_10;
+var object_25 = new Object();
+object_25.text='Memory Cateogry';
+object_24.title=object_25;
+object_21.xAxis=object_24;
+var object_26 = new Object();
+object_26.allowDecimals = false;
+var object_27 = new Object();
+object_27.text='Total PSS Values(MB)';
+object_26.title=object_27;
+object_21.yAxis=object_26;
+var category = new Highcharts.Chart(object_21);
 };
 {
 var object_32 = new Object();
 var object_33 = new Object();
-object_33.renderTo='category';
+object_33.renderTo='native';
 object_33.type='bar';
 object_33.plotBorderWidth=1;
 object_33.plotShadow=false;
 object_33.animation=false;
 object_32.chart=object_33;
 var object_34 = new Object();
-object_34.text='Total PSS by Category';
+object_34.text='Total PSS in Category Native';
 object_32.title=object_34;
-var object_42 = new Object();
-object_42.pointFormat='{point.name}:<b>{point.y}MB </b>';
-object_32.tooltip=object_42;
-var object_39 = new Object();
-var object_40 = new Object();
-object_40.allowPointSelect=true;
-object_40.cursor='pointer';
-var object_41 = new Object();
-object_41.enabled=true;
-object_41.format='<b>{point.name}</b>: {point.y}MB';
-object_40.dataLabels=object_41;
-object_39.bar=object_40;
-object_32.plotOptions=object_39;
-var objectList_2 = new Array();
-var object_130 = new Object();
-object_130.name = 'Memory By Category';
-var objectList_3 = new Array({name:'Services B',y:487.000000},
-{name:'Persistent',y:398.000000},
-{name:'Cached',y:223.000000},
-{name:'Perceptible',y:137.000000},
-{name:'Foreground',y:110.000000},
-{name:'Visible',y:99.000000},
-{name:'Services A',y:94.000000},
-{name:'Native',y:86.000000},
-{name:'Previous',y:75.000000}
+var object_31 = new Object();
+object_31.pointFormat='{point.name}:<b>{point.y}MB </b>';
+object_32.tooltip=object_31;
+var object_28 = new Object();
+var object_29 = new Object();
+object_29.allowPointSelect=true;
+object_29.cursor='pointer';
+var object_30 = new Object();
+object_30.enabled=true;
+object_30.format='<b>{point.name}</b>: {point.y}MB';
+object_29.dataLabels=object_30;
+object_28.bar=object_29;
+object_32.plotOptions=object_28;
+var objectList_11 = new Array();
+var object_996 = new Object();
+object_996.name = 'Processes PSS in : Native';
+var objectList_12 = new Array({name:'mediaserver',y:9.000000},
+{name:'gxFpDaemon',y:6.000000},
+{name:'33999',y:5.000000}
 );
-object_130.data=objectList_3;
-objectList_2[0]=object_130;
-object_32.series=objectList_2;
+object_996.data=objectList_12;
+objectList_11[0]=object_996;
+object_32.series=objectList_11;
 var object_35 = new Object();
 object_35.allowDecimals = false;
-var objectList_4 = new Array();
-objectList_4[0]='Services B';
-objectList_4[1]='Persistent';
-objectList_4[2]='Cached';
-objectList_4[3]='Perceptible';
-objectList_4[4]='Foreground';
-objectList_4[5]='Visible';
-objectList_4[6]='Services A';
-objectList_4[7]='Native';
-objectList_4[8]='Previous';
-object_35.categories=objectList_4;
+var objectList_13 = new Array();
+objectList_13[0]='mediaserver';
+objectList_13[1]='gxFpDaemon';
+objectList_13[2]='33999';
+object_35.categories=objectList_13;
 var object_36 = new Object();
-object_36.text='Memory Cateogry';
+object_36.text='Process Name';
 object_35.title=object_36;
 object_32.xAxis=object_35;
+var object_26 = new Object();
+object_26.allowDecimals = false;
+var object_27 = new Object();
+object_27.text='Total PSS Values(MB)';
+object_26.title=object_27;
+object_32.yAxis=object_26;
+var native = new Highcharts.Chart(object_32);
+};
+{
 var object_37 = new Object();
-object_37.allowDecimals = false;
 var object_38 = new Object();
-object_38.text='Total PSS Values(MB)';
-object_37.title=object_38;
-object_32.yAxis=object_37;
-var category = new Highcharts.Chart(object_32);
+object_38.renderTo='pers';
+object_38.type='bar';
+object_38.plotBorderWidth=1;
+object_38.plotShadow=false;
+object_38.animation=false;
+object_37.chart=object_38;
+var object_39 = new Object();
+object_39.text='Total PSS in Category Persistent';
+object_37.title=object_39;
+var object_31 = new Object();
+object_31.pointFormat='{point.name}:<b>{point.y}MB </b>';
+object_37.tooltip=object_31;
+var object_28 = new Object();
+var object_29 = new Object();
+object_29.allowPointSelect=true;
+object_29.cursor='pointer';
+var object_30 = new Object();
+object_30.enabled=true;
+object_30.format='<b>{point.name}</b>: {point.y}MB';
+object_29.dataLabels=object_30;
+object_28.bar=object_29;
+object_37.plotOptions=object_28;
+var objectList_14 = new Array();
+var object_1000 = new Object();
+object_1000.name = 'Processes PSS in : Persistent';
+var objectList_15 = new Array({name:'com.android.systemui',y:124.000000},
+{name:'com.android.phone',y:40.000000},
+{name:'com.meizu.cloud',y:23.000000},
+{name:'com.android.nfc',y:5.000000},
+{name:'com.meizu.flyme.service.find',y:5.000000}
+);
+object_1000.data=objectList_15;
+objectList_14[0]=object_1000;
+object_37.series=objectList_14;
+var object_35 = new Object();
+object_35.allowDecimals = false;
+var objectList_16 = new Array();
+objectList_16[0]='com.android.systemui';
+objectList_16[1]='com.android.phone';
+objectList_16[2]='com.meizu.cloud';
+objectList_16[3]='com.android.nfc';
+objectList_16[4]='com.meizu.flyme.service.find';
+object_35.categories=objectList_16;
+var object_36 = new Object();
+object_36.text='Process Name';
+object_35.title=object_36;
+object_37.xAxis=object_35;
+var object_26 = new Object();
+object_26.allowDecimals = false;
+var object_27 = new Object();
+object_27.text='Total PSS Values(MB)';
+object_26.title=object_27;
+object_37.yAxis=object_26;
+var pers = new Highcharts.Chart(object_37);
+};
+{
+var object_40 = new Object();
+var object_41 = new Object();
+object_41.renderTo='fore';
+object_41.type='bar';
+object_41.plotBorderWidth=1;
+object_41.plotShadow=false;
+object_41.animation=false;
+object_40.chart=object_41;
+var object_42 = new Object();
+object_42.text='Total PSS in Category Forground';
+object_40.title=object_42;
+var object_31 = new Object();
+object_31.pointFormat='{point.name}:<b>{point.y}MB </b>';
+object_40.tooltip=object_31;
+var object_28 = new Object();
+var object_29 = new Object();
+object_29.allowPointSelect=true;
+object_29.cursor='pointer';
+var object_30 = new Object();
+object_30.enabled=true;
+object_30.format='<b>{point.name}</b>: {point.y}MB';
+object_29.dataLabels=object_30;
+object_28.bar=object_29;
+object_40.plotOptions=object_28;
+var objectList_17 = new Array();
+var object_1006 = new Object();
+object_1006.name = 'Processes PSS in : Foreground';
+var objectList_18 = new Array({name:'com.android.launcher3',y:70.000000}
+);
+object_1006.data=objectList_18;
+objectList_17[0]=object_1006;
+object_40.series=objectList_17;
+var object_35 = new Object();
+object_35.allowDecimals = false;
+var objectList_19 = new Array();
+objectList_19[0]='com.android.launcher3';
+object_35.categories=objectList_19;
+var object_36 = new Object();
+object_36.text='Process Name';
+object_35.title=object_36;
+object_40.xAxis=object_35;
+var object_26 = new Object();
+object_26.allowDecimals = false;
+var object_27 = new Object();
+object_27.text='Total PSS Values(MB)';
+object_26.title=object_27;
+object_40.yAxis=object_26;
+var fore = new Highcharts.Chart(object_40);
 };
 {
 var object_43 = new Object();
 var object_44 = new Object();
-object_44.renderTo='native';
+object_44.renderTo='percept';
 object_44.type='bar';
 object_44.plotBorderWidth=1;
 object_44.plotShadow=false;
 object_44.animation=false;
 object_43.chart=object_44;
 var object_45 = new Object();
-object_45.text='Total PSS in Category Native';
+object_45.text='Total PSS in Category Perceptible';
 object_43.title=object_45;
-var object_53 = new Object();
-object_53.pointFormat='{point.name}:<b>{point.y}MB </b>';
-object_43.tooltip=object_53;
-var object_50 = new Object();
-var object_51 = new Object();
-object_51.allowPointSelect=true;
-object_51.cursor='pointer';
-var object_52 = new Object();
-object_52.enabled=true;
-object_52.format='<b>{point.name}</b>: {point.y}MB';
-object_51.dataLabels=object_52;
-object_50.bar=object_51;
-object_43.plotOptions=object_50;
-var objectList_5 = new Array();
-var object_140 = new Object();
-object_140.name = 'Processes PSS in : Native';
-var objectList_6 = new Array({name:'app_process',y:12.000000},
-{name:'mediaserver',y:12.000000},
-{name:'com.ss.android.article.news:push',y:10.000000},
-{name:'mm-qcamera-daemon',y:6.000000}
-);
-object_140.data=objectList_6;
-objectList_5[0]=object_140;
-object_43.series=objectList_5;
-var object_46 = new Object();
-object_46.allowDecimals = false;
-var objectList_7 = new Array();
-objectList_7[0]='app_process';
-objectList_7[1]='mediaserver';
-objectList_7[2]='com.ss.android.article.news:push';
-objectList_7[3]='mm-qcamera-daemon';
-object_46.categories=objectList_7;
-var object_47 = new Object();
-object_47.text='Process Name';
-object_46.title=object_47;
-object_43.xAxis=object_46;
-var object_48 = new Object();
-object_48.allowDecimals = false;
-var object_49 = new Object();
-object_49.text='Total PSS Value(MB)';
-object_48.title=object_49;
-object_43.yAxis=object_48;
-var native = new Highcharts.Chart(object_43);
-};
-{
-var object_54 = new Object();
-var object_55 = new Object();
-object_55.renderTo='pers';
-object_55.type='bar';
-object_55.plotBorderWidth=1;
-object_55.plotShadow=false;
-object_55.animation=false;
-object_54.chart=object_55;
-var object_56 = new Object();
-object_56.text='Total PSS in Category Persistent';
-object_54.title=object_56;
-var object_64 = new Object();
-object_64.pointFormat='{point.name}:<b>{point.y}MB </b>';
-object_54.tooltip=object_64;
-var object_61 = new Object();
-var object_62 = new Object();
-object_62.allowPointSelect=true;
-object_62.cursor='pointer';
-var object_63 = new Object();
-object_63.enabled=true;
-object_63.format='<b>{point.name}</b>: {point.y}MB';
-object_62.dataLabels=object_63;
-object_61.bar=object_62;
-object_54.plotOptions=object_61;
-var objectList_8 = new Array();
-var object_145 = new Object();
-object_145.name = 'Processes PSS in : Persistent';
-var objectList_9 = new Array({name:'system',y:116.000000},
-{name:'com.android.phone',y:99.000000},
-{name:'com.android.systemui',y:77.000000},
-{name:'com.samsung.android.writingbuddyservice',y:26.000000},
-{name:'com.sec.android.sviewcover',y:16.000000},
-{name:'android.process.acore',y:15.000000},
-{name:'com.android.nfc',y:12.000000},
-{name:'com.sec.android.provider.logsprovider',y:8.000000},
-{name:'com.samsung.android.providers.context',y:8.000000},
-{name:'com.samsung.indexservice',y:8.000000}
-);
-object_145.data=objectList_9;
-objectList_8[0]=object_145;
-object_54.series=objectList_8;
-var object_57 = new Object();
-object_57.allowDecimals = false;
-var objectList_10 = new Array();
-objectList_10[0]='system';
-objectList_10[1]='com.android.phone';
-objectList_10[2]='com.android.systemui';
-objectList_10[3]='com.samsung.android.writingbuddyservice';
-objectList_10[4]='com.sec.android.sviewcover';
-objectList_10[5]='android.process.acore';
-objectList_10[6]='com.android.nfc';
-objectList_10[7]='com.sec.android.provider.logsprovider';
-objectList_10[8]='com.samsung.android.providers.context';
-objectList_10[9]='com.samsung.indexservice';
-object_57.categories=objectList_10;
-var object_58 = new Object();
-object_58.text='Process Name';
-object_57.title=object_58;
-object_54.xAxis=object_57;
-var object_59 = new Object();
-object_59.allowDecimals = false;
-var object_60 = new Object();
-object_60.text='Total PSS Value(MB)';
-object_59.title=object_60;
-object_54.yAxis=object_59;
-var pers = new Highcharts.Chart(object_54);
-};
-{
-var object_65 = new Object();
-var object_66 = new Object();
-object_66.renderTo='fore';
-object_66.type='bar';
-object_66.plotBorderWidth=1;
-object_66.plotShadow=false;
-object_66.animation=false;
-object_65.chart=object_66;
-var object_67 = new Object();
-object_67.text='Total PSS in Category Forground';
-object_65.title=object_67;
-var object_75 = new Object();
-object_75.pointFormat='{point.name}:<b>{point.y}MB </b>';
-object_65.tooltip=object_75;
-var object_72 = new Object();
-var object_73 = new Object();
-object_73.allowPointSelect=true;
-object_73.cursor='pointer';
-var object_74 = new Object();
-object_74.enabled=true;
-object_74.format='<b>{point.name}</b>: {point.y}MB';
-object_73.dataLabels=object_74;
-object_72.bar=object_73;
-object_65.plotOptions=object_72;
-var objectList_11 = new Array();
-var object_156 = new Object();
-object_156.name = 'Processes PSS in : Foreground';
-var objectList_12 = new Array({name:'com.sec.android.app.launcher',y:81.000000},
-{name:'com.sec.android.app.controlpanel',y:24.000000},
-{name:'com.visionobjects.resourcemanager',y:3.000000}
-);
-object_156.data=objectList_12;
-objectList_11[0]=object_156;
-object_65.series=objectList_11;
-var object_68 = new Object();
-object_68.allowDecimals = false;
-var objectList_13 = new Array();
-objectList_13[0]='com.sec.android.app.launcher';
-objectList_13[1]='com.sec.android.app.controlpanel';
-objectList_13[2]='com.visionobjects.resourcemanager';
-object_68.categories=objectList_13;
-var object_69 = new Object();
-object_69.text='Process Name';
-object_68.title=object_69;
-object_65.xAxis=object_68;
-var object_70 = new Object();
-object_70.allowDecimals = false;
-var object_71 = new Object();
-object_71.text='Total PSS Value(MB)';
-object_70.title=object_71;
-object_65.yAxis=object_70;
-var fore = new Highcharts.Chart(object_65);
-};
-{
-var object_76 = new Object();
-var object_77 = new Object();
-object_77.renderTo='percept';
-object_77.type='bar';
-object_77.plotBorderWidth=1;
-object_77.plotShadow=false;
-object_77.animation=false;
-object_76.chart=object_77;
-var object_78 = new Object();
-object_78.text='Total PSS in Category Perceptible';
-object_76.title=object_78;
-var object_86 = new Object();
-object_86.pointFormat='{point.name}:<b>{point.y}MB </b>';
-object_76.tooltip=object_86;
-var object_83 = new Object();
-var object_84 = new Object();
-object_84.allowPointSelect=true;
-object_84.cursor='pointer';
-var object_85 = new Object();
-object_85.enabled=true;
-object_85.format='<b>{point.name}</b>: {point.y}MB';
-object_84.dataLabels=object_85;
-object_83.bar=object_84;
-object_76.plotOptions=object_83;
-var objectList_14 = new Array();
-var object_160 = new Object();
-object_160.name = 'Processes PSS in : Perceptible';
-var objectList_15 = new Array({name:'com.sohu.inputmethod.sogou',y:68.000000},
-{name:'com.tencent.pb',y:40.000000},
-{name:'com.tencent.pb:push',y:15.000000},
-{name:'com.samsung.android.MtpApplication',y:8.000000}
-);
-object_160.data=objectList_15;
-objectList_14[0]=object_160;
-object_76.series=objectList_14;
-var object_79 = new Object();
-object_79.allowDecimals = false;
-var objectList_16 = new Array();
-objectList_16[0]='com.sohu.inputmethod.sogou';
-objectList_16[1]='com.tencent.pb';
-objectList_16[2]='com.tencent.pb:push';
-objectList_16[3]='com.samsung.android.MtpApplication';
-object_79.categories=objectList_16;
-var object_80 = new Object();
-object_80.text='Process Name';
-object_79.title=object_80;
-object_76.xAxis=object_79;
-var object_81 = new Object();
-object_81.allowDecimals = false;
-var object_82 = new Object();
-object_82.text='Total PSS Value(MB)';
-object_81.title=object_82;
-object_76.yAxis=object_81;
-var percept = new Highcharts.Chart(object_76);
-};
-{
-var object_87 = new Object();
-var object_88 = new Object();
-object_88.renderTo='servicea';
-object_88.type='bar';
-object_88.plotBorderWidth=1;
-object_88.plotShadow=false;
-object_88.animation=false;
-object_87.chart=object_88;
-var object_89 = new Object();
-object_89.text='Total PSS in Category Serivce A';
-object_87.title=object_89;
-var object_97 = new Object();
-object_97.pointFormat='{point.name}:<b>{point.y}MB </b>';
-object_87.tooltip=object_97;
-var object_94 = new Object();
-var object_95 = new Object();
-object_95.allowPointSelect=true;
-object_95.cursor='pointer';
-var object_96 = new Object();
-object_96.enabled=true;
-object_96.format='<b>{point.name}</b>: {point.y}MB';
-object_95.dataLabels=object_96;
-object_94.bar=object_95;
-object_87.plotOptions=object_94;
-var objectList_17 = new Array();
-var object_165 = new Object();
-object_165.name = 'Processes PSS in : Services A';
-var objectList_18 = new Array({name:'com.google.process.gapps',y:20.000000},
-{name:'com.google.android.gms',y:16.000000},
-{name:'com.tencent.mobileqq:MSF',y:15.000000},
-{name:'com.tencent.mtt',y:13.000000},
-{name:'android.process.media',y:9.000000},
-{name:'com.tencent.mm:push',y:9.000000},
-{name:'com.tencent.mtt:service',y:9.000000}
-);
-object_165.data=objectList_18;
-objectList_17[0]=object_165;
-object_87.series=objectList_17;
-var object_90 = new Object();
-object_90.allowDecimals = false;
-var objectList_19 = new Array();
-objectList_19[0]='com.google.process.gapps';
-objectList_19[1]='com.google.android.gms';
-objectList_19[2]='com.tencent.mobileqq:MSF';
-objectList_19[3]='com.tencent.mtt';
-objectList_19[4]='android.process.media';
-objectList_19[5]='com.tencent.mm:push';
-objectList_19[6]='com.tencent.mtt:service';
-object_90.categories=objectList_19;
-var object_91 = new Object();
-object_91.text='Process Name';
-object_90.title=object_91;
-object_87.xAxis=object_90;
-var object_92 = new Object();
-object_92.allowDecimals = false;
-var object_93 = new Object();
-object_93.text='Total PSS Value(MB)';
-object_92.title=object_93;
-object_87.yAxis=object_92;
-var servicea = new Highcharts.Chart(object_87);
-};
-{
-var object_98 = new Object();
-var object_99 = new Object();
-object_99.renderTo='serviceb';
-object_99.type='bar';
-object_99.plotBorderWidth=1;
-object_99.plotShadow=false;
-object_99.animation=false;
-object_98.chart=object_99;
-var object_100 = new Object();
-object_100.text='Total PSS in Category Serivce B';
-object_98.title=object_100;
-var object_108 = new Object();
-object_108.pointFormat='{point.name}:<b>{point.y}MB </b>';
-object_98.tooltip=object_108;
-var object_105 = new Object();
-var object_106 = new Object();
-object_106.allowPointSelect=true;
-object_106.cursor='pointer';
-var object_107 = new Object();
-object_107.enabled=true;
-object_107.format='<b>{point.name}</b>: {point.y}MB';
-object_106.dataLabels=object_107;
-object_105.bar=object_106;
-object_98.plotOptions=object_105;
+var object_31 = new Object();
+object_31.pointFormat='{point.name}:<b>{point.y}MB </b>';
+object_43.tooltip=object_31;
+var object_28 = new Object();
+var object_29 = new Object();
+object_29.allowPointSelect=true;
+object_29.cursor='pointer';
+var object_30 = new Object();
+object_30.enabled=true;
+object_30.format='<b>{point.name}</b>: {point.y}MB';
+object_29.dataLabels=object_30;
+object_28.bar=object_29;
+object_43.plotOptions=object_28;
 var objectList_20 = new Array();
-var object_173 = new Object();
-object_173.name = 'Processes PSS in : Services B';
-var objectList_21 = new Array({name:'com.sina.weibo',y:72.000000},
-{name:'sina.mobile.tianqitong',y:65.000000},
-{name:'com.netease.mobimail',y:49.000000},
-{name:'com.qihoo.permmgr',y:23.000000},
-{name:'com.tencent.qqpimsecure',y:21.000000},
-{name:'com.zhihu.daily.android',y:20.000000},
-{name:'com.eg.android.AlipayGphone:push',y:18.000000},
-{name:'com.taobao.taobao',y:18.000000},
-{name:'com.eg.android.AlipayGphone',y:17.000000},
-{name:'com.baidu.appsearch',y:17.000000},
-{name:'com.baidu.appsearch:bdservice_v1',y:17.000000},
-{name:'com.google.process.location',y:15.000000},
-{name:'com.samsung.android.snote',y:12.000000},
-{name:'com.sec.android.app.shealth',y:10.000000},
-{name:'com.jd.jrapp:xg_service_v2',y:9.000000},
-{name:'com.sina.weibo:remote',y:9.000000},
-{name:'com.flightmanager.view:pushservice',y:8.000000},
-{name:'com.wssyncmldm',y:7.000000},
-{name:'ctrip.android.view:pushservice',y:7.000000},
-{name:'com.sina.weibo.image',y:7.000000},
-{name:'ctrip.android.view:pushsdk.v1',y:7.000000},
-{name:'com.sec.android.app.keyguard',y:6.000000},
-{name:'com.mobeam.barcodeService',y:5.000000},
-{name:'com.sec.esdk.elm',y:5.000000}
+var object_1008 = new Object();
+object_1008.name = 'Processes PSS in : Perceptible';
+var objectList_21 = new Array({name:'com.baidu.input_mz',y:41.000000}
 );
-object_173.data=objectList_21;
-objectList_20[0]=object_173;
-object_98.series=objectList_20;
-var object_101 = new Object();
-object_101.allowDecimals = false;
+object_1008.data=objectList_21;
+objectList_20[0]=object_1008;
+object_43.series=objectList_20;
+var object_35 = new Object();
+object_35.allowDecimals = false;
 var objectList_22 = new Array();
-objectList_22[0]='com.sina.weibo';
-objectList_22[1]='sina.mobile.tianqitong';
-objectList_22[2]='com.netease.mobimail';
-objectList_22[3]='com.qihoo.permmgr';
-objectList_22[4]='com.tencent.qqpimsecure';
-objectList_22[5]='com.zhihu.daily.android';
-objectList_22[6]='com.eg.android.AlipayGphone:push';
-objectList_22[7]='com.taobao.taobao';
-objectList_22[8]='com.eg.android.AlipayGphone';
-objectList_22[9]='com.baidu.appsearch';
-objectList_22[10]='com.baidu.appsearch:bdservice_v1';
-objectList_22[11]='com.google.process.location';
-objectList_22[12]='com.samsung.android.snote';
-objectList_22[13]='com.sec.android.app.shealth';
-objectList_22[14]='com.jd.jrapp:xg_service_v2';
-objectList_22[15]='com.sina.weibo:remote';
-objectList_22[16]='com.flightmanager.view:pushservice';
-objectList_22[17]='com.wssyncmldm';
-objectList_22[18]='ctrip.android.view:pushservice';
-objectList_22[19]='com.sina.weibo.image';
-objectList_22[20]='ctrip.android.view:pushsdk.v1';
-objectList_22[21]='com.sec.android.app.keyguard';
-objectList_22[22]='com.mobeam.barcodeService';
-objectList_22[23]='com.sec.esdk.elm';
-object_101.categories=objectList_22;
-var object_102 = new Object();
-object_102.text='Process Name';
-object_101.title=object_102;
-object_98.xAxis=object_101;
-var object_103 = new Object();
-object_103.allowDecimals = false;
-var object_104 = new Object();
-object_104.text='Total PSS Value(MB)';
-object_103.title=object_104;
-object_98.yAxis=object_103;
-var serviceb = new Highcharts.Chart(object_98);
+objectList_22[0]='com.baidu.input_mz';
+object_35.categories=objectList_22;
+var object_36 = new Object();
+object_36.text='Process Name';
+object_35.title=object_36;
+object_43.xAxis=object_35;
+var object_26 = new Object();
+object_26.allowDecimals = false;
+var object_27 = new Object();
+object_27.text='Total PSS Values(MB)';
+object_26.title=object_27;
+object_43.yAxis=object_26;
+var percept = new Highcharts.Chart(object_43);
 };
 {
-var object_109 = new Object();
-var object_110 = new Object();
-object_110.renderTo='cached';
-object_110.type='bar';
-object_110.plotBorderWidth=1;
-object_110.plotShadow=false;
-object_110.animation=false;
-object_109.chart=object_110;
-var object_111 = new Object();
-object_111.text='Total PSS in Category Cached';
-object_109.title=object_111;
-var object_119 = new Object();
-object_119.pointFormat='{point.name}:<b>{point.y}MB </b>';
-object_109.tooltip=object_119;
-var object_116 = new Object();
-var object_117 = new Object();
-object_117.allowPointSelect=true;
-object_117.cursor='pointer';
-var object_118 = new Object();
-object_118.enabled=true;
-object_118.format='<b>{point.name}</b>: {point.y}MB';
-object_117.dataLabels=object_118;
-object_116.bar=object_117;
-object_109.plotOptions=object_116;
+var object_46 = new Object();
+var object_47 = new Object();
+object_47.renderTo='servicea';
+object_47.type='bar';
+object_47.plotBorderWidth=1;
+object_47.plotShadow=false;
+object_47.animation=false;
+object_46.chart=object_47;
+var object_48 = new Object();
+object_48.text='Total PSS in Category Serivce A';
+object_46.title=object_48;
+var object_31 = new Object();
+object_31.pointFormat='{point.name}:<b>{point.y}MB </b>';
+object_46.tooltip=object_31;
+var object_28 = new Object();
+var object_29 = new Object();
+object_29.allowPointSelect=true;
+object_29.cursor='pointer';
+var object_30 = new Object();
+object_30.enabled=true;
+object_30.format='<b>{point.name}</b>: {point.y}MB';
+object_29.dataLabels=object_30;
+object_28.bar=object_29;
+object_46.plotOptions=object_28;
 var objectList_23 = new Array();
-var object_198 = new Object();
-object_198.name = 'Processes PSS in : Cached';
-var objectList_24 = new Array({name:'com.android.contacts',y:58.000000},
-{name:'com.android.calendar',y:17.000000},
-{name:'com.tencent.qqpimsecure:fore',y:15.000000},
-{name:'com.android.mms',y:14.000000},
-{name:'com.sec.android.gallery3d',y:13.000000},
-{name:'com.google.android.tts',y:12.000000},
-{name:'com.alipay.android.app',y:12.000000},
-{name:'sogou.mobile.explorer.hotwords',y:11.000000},
-{name:'com.google.android.gms.unstable',y:7.000000},
-{name:'com.android.bluetooth',y:6.000000},
-{name:'com.jd.jrapp',y:6.000000},
-{name:'com.baidu.netdisk_ss',y:5.000000},
-{name:'com.sec.android.daemonapp',y:5.000000},
-{name:'com.sec.android.allshare.service.mediashare',y:5.000000}
+var object_1010 = new Object();
+object_1010.name = 'Processes PSS in : Services A';
+var objectList_24 = new Array({name:'com.tencent.mm:push',y:38.000000},
+{name:'android.process.media',y:29.000000},
+{name:'com.ijinshan.browser_fast:cheetah_push_fast',y:23.000000},
+{name:'com.meizu.media.gallery',y:11.000000}
 );
-object_198.data=objectList_24;
-objectList_23[0]=object_198;
-object_109.series=objectList_23;
-var object_112 = new Object();
-object_112.allowDecimals = false;
+object_1010.data=objectList_24;
+objectList_23[0]=object_1010;
+object_46.series=objectList_23;
+var object_35 = new Object();
+object_35.allowDecimals = false;
 var objectList_25 = new Array();
-objectList_25[0]='com.android.contacts';
-objectList_25[1]='com.android.calendar';
-objectList_25[2]='com.tencent.qqpimsecure:fore';
-objectList_25[3]='com.android.mms';
-objectList_25[4]='com.sec.android.gallery3d';
-objectList_25[5]='com.google.android.tts';
-objectList_25[6]='com.alipay.android.app';
-objectList_25[7]='sogou.mobile.explorer.hotwords';
-objectList_25[8]='com.google.android.gms.unstable';
-objectList_25[9]='com.android.bluetooth';
-objectList_25[10]='com.jd.jrapp';
-objectList_25[11]='com.baidu.netdisk_ss';
-objectList_25[12]='com.sec.android.daemonapp';
-objectList_25[13]='com.sec.android.allshare.service.mediashare';
-object_112.categories=objectList_25;
-var object_113 = new Object();
-object_113.text='Process Name';
-object_112.title=object_113;
-object_109.xAxis=object_112;
-var object_114 = new Object();
-object_114.allowDecimals = false;
-var object_115 = new Object();
-object_115.text='Total PSS Value(MB)';
-object_114.title=object_115;
-object_109.yAxis=object_114;
-var cached = new Highcharts.Chart(object_109);
+objectList_25[0]='com.tencent.mm:push';
+objectList_25[1]='android.process.media';
+objectList_25[2]='com.ijinshan.browser_fast:cheetah_push_fast';
+objectList_25[3]='com.meizu.media.gallery';
+object_35.categories=objectList_25;
+var object_36 = new Object();
+object_36.text='Process Name';
+object_35.title=object_36;
+object_46.xAxis=object_35;
+var object_26 = new Object();
+object_26.allowDecimals = false;
+var object_27 = new Object();
+object_27.text='Total PSS Values(MB)';
+object_26.title=object_27;
+object_46.yAxis=object_26;
+var servicea = new Highcharts.Chart(object_46);
+};
+{
+var object_49 = new Object();
+var object_50 = new Object();
+object_50.renderTo='serviceb';
+object_50.type='bar';
+object_50.plotBorderWidth=1;
+object_50.plotShadow=false;
+object_50.animation=false;
+object_49.chart=object_50;
+var object_51 = new Object();
+object_51.text='Total PSS in Category Serivce B';
+object_49.title=object_51;
+var object_31 = new Object();
+object_31.pointFormat='{point.name}:<b>{point.y}MB </b>';
+object_49.tooltip=object_31;
+var object_28 = new Object();
+var object_29 = new Object();
+object_29.allowPointSelect=true;
+object_29.cursor='pointer';
+var object_30 = new Object();
+object_30.enabled=true;
+object_30.format='<b>{point.name}</b>: {point.y}MB';
+object_29.dataLabels=object_30;
+object_28.bar=object_29;
+object_49.plotOptions=object_28;
+var objectList_26 = new Array();
+var object_1015 = new Object();
+object_1015.name = 'Processes PSS in : Services B';
+var objectList_27 = new Array({name:'com.meizu.flyme.weather',y:104.000000},
+{name:'com.tencent.mm',y:94.000000},
+{name:'com.android.settings',y:38.000000},
+{name:'com.tencent.mobileqq:MSF',y:38.000000},
+{name:'com.meizu.media.music',y:25.000000},
+{name:'com.android.mms',y:24.000000},
+{name:'com.meizu.safe',y:18.000000},
+{name:'com.meizu.media.video',y:15.000000},
+{name:'com.android.exchange',y:12.000000},
+{name:'com.meizu.mstore',y:9.000000},
+{name:'com.meizu.smartcomservice',y:8.000000},
+{name:'com.meizu.customizecenter',y:6.000000},
+{name:'com.meizu.mzsnssyncservice',y:5.000000}
+);
+object_1015.data=objectList_27;
+objectList_26[0]=object_1015;
+object_49.series=objectList_26;
+var object_35 = new Object();
+object_35.allowDecimals = false;
+var objectList_28 = new Array();
+objectList_28[0]='com.meizu.flyme.weather';
+objectList_28[1]='com.tencent.mm';
+objectList_28[2]='com.android.settings';
+objectList_28[3]='com.tencent.mobileqq:MSF';
+objectList_28[4]='com.meizu.media.music';
+objectList_28[5]='com.android.mms';
+objectList_28[6]='com.meizu.safe';
+objectList_28[7]='com.meizu.media.video';
+objectList_28[8]='com.android.exchange';
+objectList_28[9]='com.meizu.mstore';
+objectList_28[10]='com.meizu.smartcomservice';
+objectList_28[11]='com.meizu.customizecenter';
+objectList_28[12]='com.meizu.mzsnssyncservice';
+object_35.categories=objectList_28;
+var object_36 = new Object();
+object_36.text='Process Name';
+object_35.title=object_36;
+object_49.xAxis=object_35;
+var object_26 = new Object();
+object_26.allowDecimals = false;
+var object_27 = new Object();
+object_27.text='Total PSS Values(MB)';
+object_26.title=object_27;
+object_49.yAxis=object_26;
+var serviceb = new Highcharts.Chart(object_49);
+};
+{
+var object_52 = new Object();
+var object_53 = new Object();
+object_53.renderTo='cached';
+object_53.type='bar';
+object_53.plotBorderWidth=1;
+object_53.plotShadow=false;
+object_53.animation=false;
+object_52.chart=object_53;
+var object_54 = new Object();
+object_54.text='Total PSS in Category Cached';
+object_52.title=object_54;
+var object_31 = new Object();
+object_31.pointFormat='{point.name}:<b>{point.y}MB </b>';
+object_52.tooltip=object_31;
+var object_28 = new Object();
+var object_29 = new Object();
+object_29.allowPointSelect=true;
+object_29.cursor='pointer';
+var object_30 = new Object();
+object_30.enabled=true;
+object_30.format='<b>{point.name}</b>: {point.y}MB';
+object_29.dataLabels=object_30;
+object_28.bar=object_29;
+object_52.plotOptions=object_28;
+var objectList_29 = new Array();
+var object_1029 = new Object();
+object_1029.name = 'Processes PSS in : Cached';
+var objectList_30 = new Array({name:'com.ijinshan.browser_fast',y:199.000000},
+{name:'com.tencent.mobileqq',y:74.000000},
+{name:'com.android.dialer',y:40.000000},
+{name:'android.process.acore',y:10.000000},
+{name:'com.android.calendar',y:9.000000},
+{name:'com.android.alarmclock',y:7.000000},
+{name:'com.meizu.mpay',y:5.000000},
+{name:'com.android.providers.usagestats',y:5.000000}
+);
+object_1029.data=objectList_30;
+objectList_29[0]=object_1029;
+object_52.series=objectList_29;
+var object_35 = new Object();
+object_35.allowDecimals = false;
+var objectList_31 = new Array();
+objectList_31[0]='com.ijinshan.browser_fast';
+objectList_31[1]='com.tencent.mobileqq';
+objectList_31[2]='com.android.dialer';
+objectList_31[3]='android.process.acore';
+objectList_31[4]='com.android.calendar';
+objectList_31[5]='com.android.alarmclock';
+objectList_31[6]='com.meizu.mpay';
+objectList_31[7]='com.android.providers.usagestats';
+object_35.categories=objectList_31;
+var object_36 = new Object();
+object_36.text='Process Name';
+object_35.title=object_36;
+object_52.xAxis=object_35;
+var object_26 = new Object();
+object_26.allowDecimals = false;
+var object_27 = new Object();
+object_27.text='Total PSS Values(MB)';
+object_26.title=object_27;
+object_52.yAxis=object_26;
+var cached = new Highcharts.Chart(object_52);
 };
 });
 window.onscroll=function(){
@@ -595,6 +1555,9 @@ body { min-width: 800px; max-width:1400px; margin:0 auto; padding:5px; }
 #sidebar li:hover { background:#7cb5ec; color:#fff; }
 #sidebar a { color:#333333; text-decoration:none; }
  #content { margin-left: 205px; min-width:700px; }
+#diskstats {min-width:300px;min-height:300px;}
+#history {min-width:400px;min-height:400px;}
+#datausage {min-width:400px;min-height:400px;}
 #total {min-width:200px;min-height:200px;}
 #category {min-width:400px;min-height:400px;}
 #native {min-width:300px;min-height:400px;}
@@ -607,10 +1570,13 @@ body { min-width: 800px; max-width:1400px; margin:0 auto; padding:5px; }
 </style>
 </head>
 <body>
-<div id="header"><H1>Android Log Report</h1><h3>made by Innost</h3><hr/></div>
+<div id="header"><H1>Android Log Report</h1><h3>made by Innost & duanqz</h3><hr/></div>
 <div id="main">
 <div id="sidebar">
 <ul>
+<li><a href="#diskstats"><div>Disk Usage Information</div></a></li>
+<li><a href="#history"><div>Battery History Information</div></a></li>
+<li><a href="#datausage"><div>Data Usage Information</div></a></li>
 <li><a href="#total"><div>Total Memory Usage Info</div></a></li>
 <li><a href="#category"><div>Total PSS by Category</div></a></li>
 <li><a href="#native"><div>Total PSS in Category Native</div></a></li>
@@ -623,6 +1589,9 @@ body { min-width: 800px; max-width:1400px; margin:0 auto; padding:5px; }
 </ul>
 </div>
 <div id="content">
+<div id="diskstats"></div>
+<div id="history"></div>
+<div id="datausage"></div>
 <div id="total"></div>
 <div id="category"></div>
 <div id="native"></div>
