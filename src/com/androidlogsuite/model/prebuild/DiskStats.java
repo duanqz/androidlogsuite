@@ -32,7 +32,7 @@ public class DiskStats extends Model {
 
     public void draw(Output output) {
         String id = "diskstats";
-        PlotConfiguration plotConfiguration = getConfiguration()
+        PlotConfiguration plotConfiguration = getProcessConfiguration()
                 .getPlotConfiguration(id);
 
         double[] yValues = new double[] {
@@ -64,11 +64,11 @@ public class DiskStats extends Model {
 
     }
 
-    public DiskStats(String plotConfigName, int buffersize) {
-        super(plotConfigName, buffersize);
-        mModelParser = new DiskStatsParser(this);
-        mAdbClient = new AdbTask(ADB_COMMAND, this);
-    }
+//    public DiskStats(String plotConfigName, int buffersize) {
+//        super(plotConfigName, buffersize);
+//        mModelParser = new DiskStatsParser(this);
+//        mAdbClient = new AdbTask(ADB_COMMAND, this);
+//    }
 
     static private class DiskStatsParser extends Model.ModelParser {
 
@@ -76,7 +76,7 @@ public class DiskStats extends Model {
 
         public DiskStatsParser(DiskStats diskStats) {
             mDiskStats = (DiskStats) diskStats;
-            mParseConfiguration = mDiskStats.getConfiguration()
+            mParseConfiguration = mDiskStats.getProcessConfiguration()
                     .getParseConfiguration();
 
         }

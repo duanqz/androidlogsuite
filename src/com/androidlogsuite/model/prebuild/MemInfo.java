@@ -87,7 +87,7 @@ public class MemInfo extends Model {
 
         String id = "total";
 
-        PlotConfiguration plotConfiguration = getConfiguration()
+        PlotConfiguration plotConfiguration = getProcessConfiguration()
                 .getPlotConfiguration(id);
 
         Plotter.createData(plotConfiguration, "Total Memory Info", name, null,
@@ -102,7 +102,7 @@ public class MemInfo extends Model {
 
     private void drawCaterygoryInfo(Output output) {
         String id = "category";
-        PlotConfiguration plotConfig = getConfiguration().getPlotConfiguration(
+        PlotConfiguration plotConfig = getProcessConfiguration().getPlotConfiguration(
                 id);
 
         int[] inis = Plotter.sort(mPssByCategory,
@@ -175,7 +175,7 @@ public class MemInfo extends Model {
     private void drawCategory(Output output,
             LinkedList<ProcessMemInfo> memInfos, int index) {
         String id = CATEGORY[index];
-        PlotConfiguration plotConfiguration = getConfiguration()
+        PlotConfiguration plotConfiguration = getProcessConfiguration()
                 .getPlotConfiguration(id);
         if (plotConfiguration == null)
             return;
@@ -224,12 +224,12 @@ public class MemInfo extends Model {
 
     }
 
-    public MemInfo(String plotConfig, int buffersize) {
-        super(plotConfig, buffersize);
-        mAdbClient = new AdbTask(ADB_COMMAND, this);
-        mModelParser = new MemInfoParser(this);
-
-    }
+//    public MemInfo(String plotConfig, int buffersize) {
+//        super(plotConfig, buffersize);
+//        mAdbClient = new AdbTask(ADB_COMMAND, this);
+//        mModelParser = new MemInfoParser(this);
+//
+//    }
 
     @Override
     public void destroy() {
@@ -269,7 +269,7 @@ public class MemInfo extends Model {
 
         public MemInfoParser(MemInfo model) {
             mMemInfo = model;
-            mParseConfiguration = mMemInfo.getConfiguration()
+            mParseConfiguration = mMemInfo.getProcessConfiguration()
                     .getParseConfiguration();
         }
 

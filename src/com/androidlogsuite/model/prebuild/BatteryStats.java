@@ -25,12 +25,12 @@ public class BatteryStats extends Model {
         mAdbClient = new AdbTask(ADB_COMMAND, this);
     }
 
-    public BatteryStats(String plotConfig, int buffersize) {
-        super(plotConfig, buffersize);
-        mModelParser = new BatteryStatsParser(this);
-        mAdbClient = new AdbTask(ADB_COMMAND, this);
-
-    }
+//    public BatteryStats(String plotConfig, int buffersize) {
+//        super(plotConfig, buffersize);
+//        mModelParser = new BatteryStatsParser(this);
+//        mAdbClient = new AdbTask(ADB_COMMAND, this);
+//
+//    }
 
     static public class BatteryHistoryItem {
         long mTime;
@@ -92,7 +92,7 @@ public class BatteryStats extends Model {
 
     private void drawHistory(Output output) {
         String id = "history";
-        PlotConfiguration plotConfig = getConfiguration().getPlotConfiguration(
+        PlotConfiguration plotConfig = getProcessConfiguration().getPlotConfiguration(
                 id);
         if (plotConfig == null)
             return;
@@ -124,7 +124,7 @@ public class BatteryStats extends Model {
 
     private void drawDataUsage(Output output) {
         String id = "datausage";
-        PlotConfiguration plotConfig = getConfiguration().getPlotConfiguration(
+        PlotConfiguration plotConfig = getProcessConfiguration().getPlotConfiguration(
                 id);
         if (plotConfig == null)
             return;
@@ -194,7 +194,7 @@ public class BatteryStats extends Model {
 
         public BatteryStatsParser(Model stats) {
             mBatteryStats = (BatteryStats) stats;
-            mParseConfiguration = mBatteryStats.getConfiguration()
+            mParseConfiguration = mBatteryStats.getProcessConfiguration()
                     .getParseConfiguration();
 
         }
