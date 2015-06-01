@@ -8,6 +8,8 @@
 - Configurated by XML, readable and extensible
 - Supporting analysing log from connected device or existing log file
 
+[![Build Status](https://travis-ci.org/duanqz/androidlogsuite.svg?branch=master)](https://github.com/duanqz/androidlogsuite)
+
 
 ## Quick Start
 
