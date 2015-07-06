@@ -35,30 +35,10 @@ public class AdbTask extends Task {
         mServerResponseParser = new AdbCommandParser();
     }
 
-    static public AdbTask getLogcatTask(String logDevice, boolean printTime) {
-        if (logDevice.equals("events") || logDevice.equals("system")
-                || logDevice.equals("main")) {
-            String cmd = "shell:exec logcat -b " + logDevice;
-            if (printTime) {
-                cmd += " -v threadtime";
-            }
-            return new AdbTask(cmd);
-        }
-
-        return null;
-
-    }
-
     public AdbTask() {
         mpStatusBuffer = ByteBuffer
                 .wrap(new byte[AdbCommand.ADB_COMMAND_RESPONSE_OK.length()]);
     }
-
-    public AdbTask(String cmd) {
-        this();
-        mCmd = cmd;
-    }
-
 
     @Override
     public boolean transmit() {

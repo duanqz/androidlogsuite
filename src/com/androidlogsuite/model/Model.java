@@ -21,8 +21,7 @@ public abstract class Model {
     ArrayList<ByteBuffer> mCleanBuffers;
     ArrayList<ByteBuffer> mDirtyBuffers;
 
-    ModelConfiguration mModelConfig;
-
+    protected ModelConfiguration mModelConfig;
     protected ModelParser mModelParser;
     protected ModelListener mModelListener;
 
@@ -37,6 +36,12 @@ public abstract class Model {
 
     public Model(ModelConfiguration modelConfig) {
         mModelConfig = modelConfig;
+
+        if (modelConfig.mBufferSize > 0) {
+            mBufferSize = modelConfig.mBufferSize;
+        } else {
+            mBufferSize = 1 << 10;
+        }
 
         mCleanBuffers = new ArrayList<ByteBuffer>();
         mDirtyBuffers = new ArrayList<ByteBuffer>();

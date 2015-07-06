@@ -1,4 +1,4 @@
-package com.androidlogsuite.model;
+package com.androidlogsuite.model.prebuild;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
@@ -6,17 +6,22 @@ import java.io.LineNumberReader;
 import java.nio.ByteBuffer;
 
 import com.androidlogsuite.configuration.ModelConfiguration;
+import com.androidlogsuite.model.Model;
 import com.androidlogsuite.output.Output;
-import com.androidlogsuite.task.Task;
 import com.androidlogsuite.util.Log;
 
-public class DynamicModel extends Model {
+public class Logcat extends Model {
 
-    private static final String TAG = "DynamicModel";
+    private static final String TAG = "Logcat";
 
     @Override
     public String getAdbCommand() {
-        return null;
+        StringBuilder cmd = new StringBuilder();
+        cmd.append("shell:exec logcat -b ").append(mModelConfig.mCmd);
+        if (mModelConfig.mbPrintTime) {
+            cmd.append(" -v threadtime");
+        }
+        return cmd.toString();
     }
 
     @Override
@@ -33,33 +38,19 @@ public class DynamicModel extends Model {
         return getModelName();
     }
 
-    public DynamicModel(ModelConfiguration modelConfig) {
+    public Logcat(ModelConfiguration modelConfig) {
         super(modelConfig);
-        mModelParser = new DynamicModelParser(this);
-        mBufferSize = 1 << 10;
+        mModelParser = new LogcatModelParser(this);
     }
 
-//    public DynamicModel(int buffersize) {
-//        this();
-//        if (buffersize <= 0)
-//            buffersize = 1 << 10;
-//        mBufferSize = buffersize;
-//    }
+    static private class LogcatModelParser extends Model.ModelParser {
 
-//    public DynamicModel(ModelConfiguration modelConfig) {
-//        this(modelConfig);
-//        mTask = task;
-//        mTask.setup(this);
-//    }
-
-    static private class DynamicModelParser extends Model.ModelParser {
-
-        private DynamicModel mModel;
+        private Logcat mModel;
 
         private boolean bHasValidDataForDrawing;
 
-        public DynamicModelParser(Model model) {
-            mModel = (DynamicModel) model;
+        public LogcatModelParser(Model model) {
+            mModel = (Logcat) model;
         }
 
         @Override

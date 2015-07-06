@@ -5,6 +5,7 @@ import com.androidlogsuite.configuration.ConfigCenter.FileModelConfiguration;
 import com.androidlogsuite.configuration.ModelConfiguration;
 import com.androidlogsuite.model.prebuild.BatteryStats;
 import com.androidlogsuite.model.prebuild.DiskStats;
+import com.androidlogsuite.model.prebuild.Logcat;
 import com.androidlogsuite.model.prebuild.MemInfo;
 import com.androidlogsuite.output.OutputCenter;
 import com.androidlogsuite.service.FileReadService;
@@ -13,7 +14,6 @@ import com.androidlogsuite.task.FileTask;
 import com.androidlogsuite.task.ITask;
 import com.androidlogsuite.task.TaskFactory;
 import com.androidlogsuite.util.Log;
-import com.androidlogsuite.util.ThreadsPool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,10 +26,6 @@ public class ModelCenter implements Model.ModelListener {
 
     ArrayList<ModelConfiguration> mAdbModelConfigurations;
     ArrayList<FileModelConfiguration> mFileModelConfigurations;
-
-
-    ArrayList<DynamicModel> mDynamicModels;
-
 
     private Map<Model, ITask> mAssociatedTasks;
 
@@ -51,28 +47,18 @@ public class ModelCenter implements Model.ModelListener {
         if (mFileModelConfigurations != null && mFileModelConfigurations.size() > 0) {
             FileReadService.getFileReadService().start();
         }
-
     }
 
     public static ModelCenter getModelCenter() {
         return gModelCenter;
     }
 
-    public void addDynamicModel(DynamicModel model) {
-        if (mDynamicModels == null)
-            mDynamicModels = new ArrayList<DynamicModel>();
-        synchronized (mDynamicModels) {
-            mDynamicModels.add(model);
-        }
-    }
-
     public void bindModelsToTasks() {
-        Model model;
-        ITask task;
+
         // Bind adb model to task
         for (ModelConfiguration adbModelConfig : mAdbModelConfigurations) {
-            model = constructModelFromModelConfig(adbModelConfig);
-            task = TaskFactory.createTask(AdbTask.class);
+            Model model = constructModelFromModelConfig(adbModelConfig);
+            AdbTask task = (AdbTask) TaskFactory.createTask(AdbTask.class);
 
             bindModelToTask(model, task);
         }
@@ -81,13 +67,19 @@ public class ModelCenter implements Model.ModelListener {
         for (FileModelConfiguration fileModelConfig : mFileModelConfigurations) {
             // Start the service to process file
             for (ModelConfiguration adbModelConfig : fileModelConfig.getFileModels()) {
-                model = constructModelFromModelConfig(adbModelConfig);
+                Model model = constructModelFromModelConfig(adbModelConfig);
                 FileTask fileTask = (FileTask) TaskFactory.createTask(FileTask.class);
                 // Each file task has a related filename
                 fileTask.setFileName(fileModelConfig.mFileName);
 
                 bindModelToTask(model, fileTask);
             }
+        }
+
+        // Force to exit if no task
+        if (mAssociatedTasks.size() == 0) {
+            // Add null object to tell OutputCenter quit.
+            OutputCenter.getOutputCenter().addModel(null);
         }
     }
 
@@ -103,11 +95,6 @@ public class ModelCenter implements Model.ModelListener {
 
     private Model constructModelFromModelConfig(ModelConfiguration modelConfig) {
         Model model = null;
-        ITask task;
-//        if (modelConfig.mType.equals("logcat")) {
-//            //model = new DynamicModel(AdbTask.getLogcatTask(modelConfig.mCmd, modelConfig.mbPrintTime));
-//            model = new DynamicModel(modelConfig);
-//        } else
         if (modelConfig.mType.equals("dumpsys")) {
             String cmd = modelConfig.mCmd;
             if (cmd.equals("diskstats")) {
@@ -116,6 +103,16 @@ public class ModelCenter implements Model.ModelListener {
                 model = new MemInfo(modelConfig);
             } else if (cmd.equals("batterystats")) {
                 model = new BatteryStats(modelConfig);
+            }
+        } else if (modelConfig.mType.equals("logcat")) {
+            String cmd = modelConfig.mCmd;
+            if ("main".equals(cmd) ||
+                "system".equals(cmd) ||
+                "radio".equals("cmd") ||
+                "events".equals(cmd) ||
+                "all".equals(cmd)) {
+
+                //model = new Logcat(modelConfig);
             }
         }
 
