@@ -74,6 +74,10 @@ public class FileReadService implements Runnable, FileReadWorker.WorkFinishedLis
     }
 
     public void stop() {
+        if (!bInService) {
+            return;
+        }
+
         bInService = false;
         mBuffer.clear();
 
