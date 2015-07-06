@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration xmlns:androidlogsuite="http://schemas.android.com/apk/res/android"
-     configuration-dir="configs/">
+               configuration-dir="configs/">
 
-<models>
-<adb-models>
-<!--
-adb models: including independently models which run adb cmd to get their info
--->
-<model-config  androidlogsuite:id="+logcat-main" androidlogsuite:type="logcat" androidlogsuite:cmd="main" androidlogsuite:printtime="false" 
-               androidlogsuite:bufsize="1024" androidlogsuite:debug="true"
-               androidlogsuite:configfile="logcat-main.xml" />
-<model-config androidlogsuite:id="+dumpsys-diskstats"  androidlogsuite:type="dumpsys" androidlogsuite:cmd="diskstats" androidlogsuite:configfile="diskstats.xml"/>
-<model-config androidlogsuite:id="+dumpsys-meminfo" androidlogsuite:type="dumpsys" androidlogsuite:cmd="meminfo"  androidlogsuite:configfile="meminfo.xml" />
-<model-config androidlogsuite:id="+dumpsys-batterystats" androidlogsuite:type="dumpsys" androidlogsuite:cmd="batterystats" androidlogsuite:configfile="batterystats.xml"/>
-</adb-models>
+    <models>
+        <adb-models>
+            <!--
+            adb models: including independently models which run adb cmd to get their info
+            -->
+            <model-config androidlogsuite:id="+logcat-main" androidlogsuite:type="logcat" androidlogsuite:cmd="main"
+                          androidlogsuite:printtime="false"
+                          androidlogsuite:bufsize="1024" androidlogsuite:debug="true"
+                          androidlogsuite:configfile="logcat-main.xml"/>
+            <model-config androidlogsuite:id="+dumpsys-diskstats" androidlogsuite:type="dumpsys"
+                          androidlogsuite:cmd="diskstats" androidlogsuite:configfile="diskstats.xml"/>
+            <model-config androidlogsuite:id="+dumpsys-meminfo" androidlogsuite:type="dumpsys"
+                          androidlogsuite:cmd="meminfo" androidlogsuite:configfile="meminfo.xml"/>
+            <model-config androidlogsuite:id="+dumpsys-batterystats" androidlogsuite:type="dumpsys"
+                          androidlogsuite:cmd="batterystats" androidlogsuite:configfile="batterystats.xml"/>
+        </adb-models>
 
-<file-models>
-<!--
-file models:
-each file model contains one file to parse by included model-config
--->
-<file-model androidlogsuite:id="+filemodel1" androidlogsuite:filename="bugreport">
-<model-config androidlogsuite:id="@dumpsys-diskstats"/>
-<!--<model-config androidlogsuite:id="@dumpsys-meminfo"/>-->
-<model-config androidlogsuite:id="@dumpsys-batterystats"/>
-</file-model>
+        <file-models>
+            <!--
+            file models:
+            each file model contains one file to parse by included model-config
+            -->
+            <file-model androidlogsuite:id="+filemodel1" androidlogsuite:filename="bugreport">
+                <model-config androidlogsuite:id="@dumpsys-diskstats"/>
+                <model-config androidlogsuite:id="@dumpsys-batterystats"/>
+                <!--<model-config androidlogsuite:id="@dumpsys-meminfo"/>-->
+            </file-model>
 
 
-<!--<file-model androidlogsuite:id="@filemodel1" androidlogsuite:override="true" androidlogsuite:filename="bugreport1">-->
-<!--<model-config androidlogsuite:id="@dumpsys-diskstats" androidlogsuite:override="true" androidlogsuite:configfile="meminfo.xml"/>-->
-<!--</file-model>-->
+            <!--<file-model androidlogsuite:id="@filemodel1" androidlogsuite:override="true" androidlogsuite:filename="bugreport1">-->
+            <!--<model-config androidlogsuite:id="@dumpsys-diskstats" androidlogsuite:override="true" androidlogsuite:configfile="meminfo.xml"/>-->
+            <!--</file-model>-->
 
-</file-models>
-</models>
+        </file-models>
+    </models>
 
-<output-config androidlogsuite:type="html" />
+    <output-config androidlogsuite:type="html"/>
 </configuration>
