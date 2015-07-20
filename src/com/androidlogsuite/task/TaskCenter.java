@@ -40,9 +40,9 @@ public class TaskCenter implements Runnable {
     public void stop() {
         synchronized (mTasks) {
             try {
-                mSelector.close();
                 mbCenterStopped = true;
                 mTasks.notifyAll();
+                mSelector.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }

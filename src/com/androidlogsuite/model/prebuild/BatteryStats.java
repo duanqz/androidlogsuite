@@ -24,13 +24,6 @@ public class BatteryStats extends Model {
         mModelParser = new BatteryStatsParser(this);
     }
 
-//    public BatteryStats(String plotConfig, int buffersize) {
-//        super(plotConfig, buffersize);
-//        mModelParser = new BatteryStatsParser(this);
-//        mAdbClient = new AdbTask(ADB_COMMAND, this);
-//
-//    }
-
     static public class BatteryHistoryItem {
         long mTime;
         int batteryLevel;
